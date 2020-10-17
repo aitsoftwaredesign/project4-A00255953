@@ -24,14 +24,10 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Maven
-      run: mvn clean install --file Server/service/pom.xml
-    - name: Build image
-      run: docker build . --file Server/service/Dockerfile --tag $IMAGE_NAME
-    - name: Log into Docker
-      run: docker login --username a0025593 --password-stdin 79b8d88b-62c8-4266-a457-8cc4b618412a
-    # Push image to DOcker hub
-    - name: Push image to Dockerhub Container Registry
-      run: |
+      run: | 
+          mvn clean install --file Server/service/pom.xml
+          docker build . --file Server/service/Dockerfile --tag $IMAGE_NAME
+          docker login --username a0025593 --password-stdin 79b8d88b-62c8-4266-a457-8cc4b618412a
           IMAGE_ID=nicholasmurray/$IMAGE_NAME
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
