@@ -26,7 +26,7 @@ jobs:
     - name: Build with Maven
       run: mvn clean install --file Server/service/pom.xml
     - name: Build image
-      run: docker build . --file Dockerfile --tag $IMAGE_NAME
+      run: docker build . --file Server/service/Dockerfile --tag $IMAGE_NAME
     - name: Log into Docker
       run: docker login --username a0025593 --password-stdin 79b8d88b-62c8-4266-a457-8cc4b618412a
     # Push image to DOcker hub
