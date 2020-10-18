@@ -25,6 +25,6 @@ jobs:
         java-version: 1.8
     - uses: s4u/maven-settings-action@v2.2.0
       with:
-        properties: '[{"jib.username": ${{ secrets.JIB_USER}}, {"jib.password":  ${{ secrets.JIB_PASS}}}]'  
+        properties: '[{"jib.username": "${{ secrets.JIB_USER}}" , {"jib.password":  "${{ secrets.JIB_PASS}}" }]'  
     - name: Build with Maven
       run: mvn package --file Server/service/pom.xml jib:build
