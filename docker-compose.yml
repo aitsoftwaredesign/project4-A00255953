@@ -1,0 +1,16 @@
+version: "3.7"
+services:
+  baservice:
+    container_name: baservice
+    build: ./Server/service
+    ports:
+      - 1405:1405
+
+  webclient:
+    container_name: webclient
+    build: ./Web Client/booking-ally
+    depends_on:
+      - baservice
+    ports:
+      - 80:3000
+
