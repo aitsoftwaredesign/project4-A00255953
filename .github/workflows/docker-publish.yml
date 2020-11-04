@@ -2,33 +2,45 @@ name: React Docker
 
 on:
   push:
-    branches: master
+    # Publish `master` as Docker `latest` image.
+    branches:
+      - master
+
+    # Publish `v1.2.3` tags as releases.
+    tags:
+      - v*
+
+  # Run tests for any PRs.
+  pull_request:
+
+env:
+  # TODO: Change variable to your image's name.
+  IMAGE_NAME: nicholasmurray/booking_ally_client
 
 jobs:
-  path-context:
+  push:
+
     runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+
     steps:
-      -
-        name: Checkout
-        uses: actions/checkout@v2
-      -
-        name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-      -
-        name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      -
-        name: Login to DockerHub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.JIB_USER }}
-          password: ${{ secrets.JIB_PASS }}
-      -
-        name: Build and push
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: Client/booking-ally/Dockerfile.prod
-          platforms: linux/amd64,linux/arm64,linux/386
-          push: true
-          tags: user/app:latest
+      - uses: actions/checkout@v2
+
+      - name: Build image
+        run: docker build . --file Client/booking-ally/Dockerfile.prod --tag $IMAGE_NAME
+
+      - name: Log into GitHub Container Registry
+      # TODO: Create a PAT with `read:packages` and `write:packages` scopes and save it as an Actions secret `CR_PAT`
+        run: docker login -u ${{ secrets.JIB_USER }} -p ${{ secrets.JIB_PASS }}
+
+      - name: Push image to GitHub Container Registry
+        run: |
+          VERSION=latest
+
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
+
+          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
+          docker push $IMAGE_ID:$VERSION
+
+
