@@ -32,9 +32,9 @@ jobs:
       - name: Build image
         run: |
           if [ -f "Web Client/booking-ally/Dockerfile.prod" ]; then
-            docker build . --file "Web Client/booking-ally/Dockerfile.prod"  --tag $IMAGE_NAME
+            docker build . --file Web\ Client/booking-ally/Dockerfile.prod --tag $IMAGE_NAME
           else
-            docker build . --file "Web Client/booking-ally/Dockerfile"  --tag $IMAGE_NAME
+            docker build . --file Web\ Client/booking-ally/Dockerfile --tag $IMAGE_NAME
           fi
 
       - name: Log into GitHub Container Registry
