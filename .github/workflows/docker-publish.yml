@@ -29,17 +29,11 @@ jobs:
       - name: Build image
         run: docker build . --file Client/booking-ally/Dockerfile.prod --tag $IMAGE_NAME
 
-      - name: Log into GitHub Container Registry
+      - name: Log into Docker
       # TODO: Create a PAT with `read:packages` and `write:packages` scopes and save it as an Actions secret `CR_PAT`
         run: docker login -u ${{ secrets.JIB_USER }} -p ${{ secrets.JIB_PASS }}
 
-      - name: Push image to GitHub Container Registry
-        run: |
-          VERSION=latest
-
-          echo IMAGE_ID=$IMAGE_ID
-          echo VERSION=$VERSION
-
-          docker push $IMAGE_NAME
+      - name: Push image to Dockerhub
+        run: docker push $IMAGE_NAME
 
 
