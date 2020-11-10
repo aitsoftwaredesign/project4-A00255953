@@ -1,53 +1,36 @@
 package com.bookingally.service.database.models;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.ManyToOne;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Id;
-import javax.persistence.GenerationType;
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
+import org.springframework.data.annotation.Id;
 
 /**
- * A persistence entity that represents data from the 'venue' table in the schema.
+ * A persistence entity that represents data from venue collection.
  * @author Nicholas Murray
  */
-@Entity
-@Table(name = "venue")
 public class Venue {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name = "venue_id")
-    private Integer id;
+    private String id;
 
-    @ManyToOne
-    @JoinColumn(name = "partner_id")
-    private Partner partner;
+    private String partner_id;
 
-    @Column(name = "venue_name")
     private String name;
 
-    @Column(name = "venue_description")
     private String description;
 
-    @Column(name = "venue_type")
     private String venueType;
 
-    @Column(name = "address1")
     private String address1;
 
-    @Column(name = "address2")
     private String address2;
 
-    @Column(name = "town")
     private String town;
 
-    public Venue() {
-    }
+    private String image;
 
-    public Venue(String name, String description, String venueType, String address1, String address2, String town) {
+    public Venue() {}
+
+    public Venue(String partner_id, String name, String description, String venueType, String address1, String address2, String town) {
+        setPartner_id(partner_id);
         setName(name);
         setDescription(description);
         setVenueType(venueType);
@@ -57,20 +40,20 @@ public class Venue {
 
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public Partner getPartner() {
-        return partner;
+    public String getPartner_id() {
+        return partner_id;
     }
 
-    public void setPartner(Partner partner) {
-        this.partner = partner;
+    public void setPartner_id(String partner_id) {
+        this.partner_id = partner_id;
     }
 
     public void setName(String name) {
@@ -121,4 +104,11 @@ public class Venue {
         return town;
     }
 
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getImage() {
+        return image;
+    }
 }

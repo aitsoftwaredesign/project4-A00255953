@@ -1,5 +1,6 @@
 import React, { Component} from 'react';
 import Venues from '../Venues';
+import UploadImage from './UploadImage';
 import RestClient from "../utilities/rest/RestClient";
 
 class Home extends Component {
@@ -24,6 +25,8 @@ class Home extends Component {
     render() {
         return (
             <div className="container">
+                <h1>Upload</h1>
+                <UploadImage/>
                 <h1 className="center blue-text">Venues</h1>
                 <Venues venues={this.state.venues}/>
             </div>

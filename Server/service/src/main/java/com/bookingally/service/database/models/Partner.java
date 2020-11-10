@@ -1,40 +1,29 @@
 package com.bookingally.service.database.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GenerationType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.springframework.data.annotation.Id;
 
 /**
- * A persistence entity that represents data from the 'partner' table in the schema.
+ * A persistence entity that represents data from the partner collection.
  * @author Nicholas Murray
  */
-@Entity
-@Table(name = "partner")
 public class Partner {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name = "partner_id")
-    private Integer id;
+    private String id;
 
-    @Column(name = "partner_name")
     private String name;
 
-    public Partner() {
-    }
+    public Partner() {}
 
     public Partner(String name) {
         setName(name);
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

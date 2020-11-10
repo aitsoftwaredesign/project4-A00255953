@@ -1,7 +1,9 @@
 package com.bookingally.service.database.repositories;
 
 import com.bookingally.service.database.models.Venue;
-import org.springframework.data.repository.CrudRepository;
+import java.util.Optional;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface VenueRepository extends CrudRepository<Venue, Integer> {
+public interface VenueRepository extends MongoRepository<Venue, Integer> {
+    Optional<Venue> findById(String id);
 }

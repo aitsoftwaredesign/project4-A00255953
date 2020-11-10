@@ -1,6 +1,7 @@
 package com.bookingally.service.rest.resources;
 
 import com.bookingally.service.database.models.Venue;
+import com.bookingally.service.database.repositories.PartnerRepository;
 import com.bookingally.service.database.repositories.VenueRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +30,16 @@ public class VenueResource {
     @Autowired
     private VenueRepository venueRepository;
 
+    @Autowired
+    private PartnerRepository partnerRepository;
+
     /**
      * Returns a {@link ResponseEntity} with the requested {@link Venue} entity from the
      * database within its response body.
      * @return {@link ResponseEntity<Venue>} response containing the Venue in the body.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Venue> getVenue(@PathVariable Integer id ) {
+    public ResponseEntity<Venue> getVenue(@PathVariable String id ) {
         Optional<Venue> venue = venueRepository.findById(id);
         return venue.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
@@ -47,7 +51,7 @@ public class VenueResource {
      */
     @GetMapping()
     public ResponseEntity<List<Venue>> getAllVenues() {
-        List<Venue> venues = (List<Venue>) venueRepository.findAll();
+        List<Venue> venues = venueRepository.findAll();
         return new ResponseEntity<>(venues, HttpStatus.OK);
     }
 
@@ -60,9 +64,15 @@ public class VenueResource {
      * @return {@link ResponseEntity<Venue>} a response entity containing the saved venue in its response body
      */
     @PostMapping()
-    public ResponseEntity<Venue> saveVenue(@RequestBody Venue newVenue) {
-        final Venue venue = venueRepository.save(newVenue);
-        return new ResponseEntity<>( venue,HttpStatus.CREATED);
+    public ResponseEntity<Object> saveVenue(@RequestBody Venue newVenue) {
+        if(partnerRepository.existsById(newVenue.getPartner_id())) {
+            final Venue venue = venueRepository.save(newVenue);
+            return new ResponseEntity<>( venue,HttpStatus.CREATED);
+        } else {
+            final String message = "Invalid Partner ID";
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     /**

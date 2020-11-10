@@ -25,8 +25,8 @@ class PartnerResourceTest extends Specification {
 
     def "When get partner is called with a valid id the partner should be returned"() {
         given: "A mock partner repository that will return the partner"
-            partnerRepository.findById(1) >> new Optional<Partner>(partner)
-            partnerRepository.findById(9) >> new Optional<>()
+            partnerRepository.findById("1") >> new Optional<Partner>(partner)
+            partnerRepository.findById("9") >> new Optional<>()
         when: "get all partners is called"
             def response = partnerResource.getPartner(id)
         then: "response should contain all the partners and status 200 OK"
@@ -34,8 +34,8 @@ class PartnerResourceTest extends Specification {
 
         where:
              id | statusCode
-             1  | 200
-             9  | 404
+             "1"  | 200
+             "9"  | 404
     }
 
     def "When get all partners is called a list of all partners should be returned"() {

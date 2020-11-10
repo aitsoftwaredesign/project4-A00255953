@@ -17,6 +17,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * A REST Controller that can be used to carry our CRUD operations for {@link Partner} entities persisted in the database
+ * @author Nicholas Murray
+ */
 @CrossOrigin
 @RestController
 @RequestMapping("/partner")
@@ -28,10 +32,10 @@ public class PartnerResource {
     /**
      * Returns a {@link ResponseEntity} with the requested {@link Partner} entity from the
      * database within its response body.
-     * @return {@link ResponseEntity<Venue>} response containing the Partner in the body.
+     * @return {@link ResponseEntity<Partner>} response containing the Partner in the body.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Partner> getPartner(@PathVariable Integer id ) {
+    public ResponseEntity<Partner> getPartner(@PathVariable String id ) {
         Optional<Partner> partner = partnerRepository.findById(id);
         return partner.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
@@ -44,7 +48,7 @@ public class PartnerResource {
      */
     @GetMapping()
     public ResponseEntity<List<Partner>> getAllPartners() {
-        List<Partner> partners = (List<Partner>) partnerRepository.findAll();
+        List<Partner> partners = partnerRepository.findAll();
         return new ResponseEntity<>(partners, HttpStatus.OK);
     }
 
