@@ -10,5 +10,5 @@
 ### Current Architecture
 ![System Architecture](/Resources/system-architecture-revised.png)
 
-### Initital Architecture
+### Initial Architecture
 ![System Architecture init ](/Resources/system-architecture-initial.png)
