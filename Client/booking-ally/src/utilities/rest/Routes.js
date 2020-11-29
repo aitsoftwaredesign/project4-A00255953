@@ -2,7 +2,9 @@ class Routes {
 
     static serverAddress = "";
     static venueExt = "/venue";
-    static partnerExt = "/partner";
+    static accountExt = "/account";
+    static login = "/authenticate";
+    static register = "/register";
 
     static getAddress() {
         let href = window.location.href;

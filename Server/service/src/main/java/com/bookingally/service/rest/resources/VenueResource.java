@@ -1,7 +1,7 @@
 package com.bookingally.service.rest.resources;
 
 import com.bookingally.service.database.models.Venue;
-import com.bookingally.service.database.repositories.PartnerRepository;
+import com.bookingally.service.database.repositories.AccountRepository;
 import com.bookingally.service.database.repositories.VenueRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ import java.util.List;
  * A REST Controller that can be used to carry our CRUD operations for {@link Venue} entities persisted in the database
  * @author Nicholas Murray
  */
-@CrossOrigin
+
 @RestController
 @RequestMapping("/venue")
 public class VenueResource {
@@ -31,7 +31,7 @@ public class VenueResource {
     private VenueRepository venueRepository;
 
     @Autowired
-    private PartnerRepository partnerRepository;
+    private AccountRepository accountRepository;
 
     /**
      * Returns a {@link ResponseEntity} with the requested {@link Venue} entity from the
@@ -65,7 +65,7 @@ public class VenueResource {
      */
     @PostMapping()
     public ResponseEntity<Object> saveVenue(@RequestBody Venue newVenue) {
-        if(partnerRepository.existsById(newVenue.getPartner_id())) {
+        if(accountRepository.existsById(newVenue.getPartner_id())) {
             final Venue venue = venueRepository.save(newVenue);
             return new ResponseEntity<>( venue,HttpStatus.CREATED);
         } else {
