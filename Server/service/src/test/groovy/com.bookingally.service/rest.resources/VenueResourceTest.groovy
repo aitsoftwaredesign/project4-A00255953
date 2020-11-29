@@ -1,4 +1,4 @@
-import com.bookingally.service.database.repositories.PartnerRepository
+import com.bookingally.service.database.repositories.AccountRepository
 import com.bookingally.service.database.repositories.VenueRepository
 import com.bookingally.service.main.BookingAllyApplication
 import com.bookingally.service.database.models.Venue
@@ -16,7 +16,7 @@ class VenueResourceTest extends Specification {
     ]
 
     VenueRepository venueRepository = Mock()
-    PartnerRepository partnerRepository = Mock()
+    AccountRepository userRepository = Mock()
 
     def venueResource = new VenueResource()
 
@@ -53,9 +53,9 @@ class VenueResourceTest extends Specification {
     def "Venue should be persisted and return status 201 CREATED with the new venue"() {
         given: "A mock Venue repository that mimics the saving of venues"
             venue.setPartner_id(partner_id)
-            venueResource.partnerRepository = partnerRepository
-            partnerRepository.existsById("1") >> true
-            partnerRepository.existsById("9") >> false
+            venueResource.accountRepository = userRepository
+            userRepository.existsById("1") >> true
+            userRepository.existsById("9") >> false
             venueRepository.save(venue) >> venue
         when: "create venue is called"
             def response = venueResource.saveVenue(venue)
