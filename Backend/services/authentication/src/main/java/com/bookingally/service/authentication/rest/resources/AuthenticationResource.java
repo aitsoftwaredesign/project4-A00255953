@@ -1,0 +1,76 @@
+package com.bookingally.service.authentication.rest.resources;
+
+import com.bookingally.service.common.database.models.AuthRequest;
+import com.bookingally.service.common.database.models.AuthResponse;
+import com.bookingally.service.common.rest.security.JwtTokenUtil;
+import com.bookingally.service.common.rest.security.UserDetailsService;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class AuthenticationResource {
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    /**
+     * Creates a Json Web Token for a given user when given valid credentials.
+     * @param authRequest the credentials to be authenticated
+     * @return {@link AuthResponse} a response entity that contains the jwt
+     */
+    @PostMapping("/authenticate")
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthRequest authRequest, @RequestParam(defaultValue = "false")  boolean returnAccount)
+            throws Exception {
+
+        authenticate(authRequest.getUsername(), authRequest.getPassword());
+
+         final UserDetails user = userDetailsService
+                .loadUserByUsername(authRequest.getUsername());
+
+        final String token = jwtTokenUtil.generateToken(user);
+        AuthResponse response;
+        if (!returnAccount) {
+            response = new AuthResponse(token);
+        } else {
+            List<Object> account = userDetailsService.loadUserAccount(authRequest.getUsername());
+            response = new AuthResponse(token, account.get(1), (String) account.get(0));
+        }
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/tokenuser")
+    public ResponseEntity<?> getUserFromToken(@RequestHeader("Authorization") String token ) {
+        token = token.split(" ")[1];
+        String username = jwtTokenUtil.getUsernameFromToken(token);
+        List<Object> user = userDetailsService.loadUserAccount(username);
+        return ResponseEntity.ok(user);
+    }
+
+    private void authenticate(String username, String password) throws Exception {
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+        } catch (DisabledException e) {
+            throw new Exception("USER_DISABLED", e);
+        } catch (BadCredentialsException e) {
+            throw new Exception("INVALID_CREDENTIALS", e);
+        }
+    }
+}

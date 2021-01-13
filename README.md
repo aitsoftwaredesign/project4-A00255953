@@ -10,7 +10,8 @@ The service will also allow restaurants to take reservations from customers and 
 
 ## System Architecture
 ### Current Architecture
-![System Architecture](/Resources/system-architecture-revised.png)
+![System Architecture](/Resources/system-architecture-with-proxy.png)
 
-### Initial Architecture
-![System Architecture init ](/Resources/system-architecture-initial.png)
+(Previous architecture revisions can be found in the "Resources" folder)
+
+

@@ -1,0 +1,23 @@
+version: "3.7"
+# Development compose file, for use during development of the Web client to allow hot
+# reload of the react site on port 80 without the container
+services:
+  nginx:
+    container_name: proxy
+    build: Proxy/dev
+    ports:
+      - "1405:80"
+    depends_on:
+      - authservice
+      - venueservice
+
+  authservice:
+    container_name: auth-service
+    build: Backend/services/authentication
+
+  venueservice:
+    container_name: venue-service
+    build: Backend/services/venue
+
+
+

@@ -50,7 +50,7 @@ fixtures/dom/public/react-dom.js
 fixtures/dom/public/react.js
 test/the-files-to-test.generated.js
 *.log*
-chrome-account-data
+chrome-customer-data
 *.sublime-project
 *.sublime-workspace
 .idea

@@ -1,0 +1,25 @@
+@import url("../../../root.css");
+
+html, body{
+    background-color: var(--grey-dark);
+}
+
+h3 {
+    white-space: nowrap;
+}
+
+.modal {
+    background-color: transparent;
+}
+
+.venueForm {
+}
+
+.formTitle {
+    white-space: nowrap;
+}
+
+.input {
+    margin: 17px 0px 0px 10px;
+    width: 500px!important;
+}
