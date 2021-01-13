@@ -11,7 +11,8 @@ on:
     branches: [ development ]
 
 env:
-  IMAGE_NAME: nicholasmurray/booking_ally_client 
+  CLIENT_IMAGE_NAME: nicholasmurray/booking_ally_client 
+  PROXY_IMAGE_NAME: nicholasmurray/proxy-service 
 
 jobs:
   build-service:
@@ -26,17 +27,29 @@ jobs:
       with:
         properties: '[{"jib.username": "${{ secrets.JIB_USER}}" , "jib.password":  "${{ secrets.JIB_PASS}}" }]'  
     - name: Build with Maven
-      run: mvn package --file Backend/services/pom.xml jib:build
+      run: mvn package --file Backend/services/pom.xml -P ci
   build-client:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
       - name: Build image
-        run: docker build . --file Client/booking-ally/Dockerfile.prod --tag $IMAGE_NAME
+        run: docker build . --file Client/booking-ally/Dockerfile.prod --tag $CLIENT_IMAGE_NAME
 
       - name: Log into Docker
-      # TODO: Create a PAT with `read:packages` and `write:packages` scopes and save it as an Actions secret `CR_PAT`
+        run: docker login -u ${{ secrets.JIB_USER }} -p ${{ secrets.JIB_PASS }}
+
+      - name: Push image to Dockerhub
+        run: docker push $IMAGE_NAME
+  build-proxy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build image
+        run: docker build . --file Proxy/Dockerfile --tag $PROXY_IMAGE_NAME
+
+      - name: Log into Docker
         run: docker login -u ${{ secrets.JIB_USER }} -p ${{ secrets.JIB_PASS }}
 
       - name: Push image to Dockerhub
@@ -44,7 +57,7 @@ jobs:
 
   merge:
     runs-on: ubuntu-latest
-    needs: [build-service, build-client]
+    needs: [build-service, build-client, build-proxy]
     steps:
       - uses: actions/checkout@master
 
