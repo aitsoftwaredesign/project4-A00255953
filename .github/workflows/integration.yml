@@ -40,7 +40,7 @@ jobs:
         run: docker login -u ${{ secrets.JIB_USER }} -p ${{ secrets.JIB_PASS }}
 
       - name: Push image to Dockerhub
-        run: docker push $IMAGE_NAME
+        run: docker push $CLIENT_IMAGE_NAME
   build-proxy:
     runs-on: ubuntu-latest
     steps:
@@ -53,7 +53,7 @@ jobs:
         run: docker login -u ${{ secrets.JIB_USER }} -p ${{ secrets.JIB_PASS }}
 
       - name: Push image to Dockerhub
-        run: docker push $IMAGE_NAME
+        run: docker push $PROXY_IMAGE_NAME
 
   merge:
     runs-on: ubuntu-latest
