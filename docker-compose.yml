@@ -1,16 +1,27 @@
 version: "3.7"
+
 services:
-  baservice:
-    container_name: baservice
-    build: ./Server/service
+  nginx:
+    container_name: proxy
+    build: ./Proxy
     ports:
-      - 1405:1405
+      - 80:80
+    depends_on:
+      - webclient
+      - authservice
+      - venueservice
 
   webclient:
     container_name: webclient
     build: ./Client/booking-ally
-    depends_on:
-      - baservice
-    ports:
-      - 80:80
+
+  authservice:
+    container_name: auth-service
+    build: ./Backend/services/authentication
+
+  venueservice:
+    container_name: venue-service
+    build: ./Backend/services/venue
+
+
 

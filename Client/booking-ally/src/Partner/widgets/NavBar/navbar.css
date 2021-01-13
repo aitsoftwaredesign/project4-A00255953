@@ -1,0 +1,16 @@
+@import url("../../../root.css");
+
+.nav{
+    background-color: transparent;
+    height: 2%;
+    position: sticky;
+}
+
+.dropdown {
+    background-color: white;
+    right:-125%;
+    top:-10px;
+    width:250px;
+    height:220px;
+}
+

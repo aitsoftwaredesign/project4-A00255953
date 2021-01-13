@@ -1,0 +1,18 @@
+.dropdown {
+    background-color: white;
+    right:-125%;
+    top:-10px;
+    width:250px;
+    height:220px;
+}
+
+.hl {
+    background-color: lightgray;
+    height: 1px;
+    width:80%;
+    margin-left: 10%;
+}
+
+.user {
+    font-size: 30px;
+}

@@ -1,0 +1,16 @@
+@import url("../../../root.css");
+
+.loading-text {
+    font-size: 50px;
+}
+
+.loading {
+    width:33%;
+    margin: 1% 1% 1% 33%;
+    padding: 5px;
+    background-color: var(--magnolia-alpha50);
+}
+
+.venue {
+    margin: 1% 1% 1% 25%;
+}
