@@ -1,44 +1,38 @@
 import React, { Component} from 'react';
-import { connect } from 'react-redux';
 import RestClient from "../../../utilities/rest/RestClient";
 import types from "../../../Resources/VenueTypes";
 import Uploadimage from "../../../utilities/UploadImage/UploadImage";
 
-class CreateVenue extends Component {
+class EditVenue extends Component {
+
+    state = {
+        venue: this.props.venue
+    }
 
     restClient = new RestClient();
 
     onChange= (e) => {
+        let venue = this.state.venue;
+        venue[e.target.id] = e.target.value;
         this.setState({
-            [e.target.id]: e.target.value
+            venue: venue
         });
     }
 
     setImageUrl = (url) => {
+        let venue = this.state.venue;
+        venue.image = url;
         this.setState({
-            image: url
+            venue: venue
         });
     }
 
-    createVenue = async (e) => {
-        this.preventDefault();
-        const newVenue = {
-            "id": null,
-            "partnerId": this.props.user.id,
-            "name": this.state.venuename,
-            "description": this.state.description,
-            "venueType": this.state.type,
-            "address1": this.state.address1,
-            "address2": this.state.address2,
-            "town": this.state.town,
-            "postCode": this.state.postcode,
-            "image": this.state.image
-        };
-
+    updateVenue = async (e) => {
+        e.preventDefault();
         let restClient = new RestClient();
-        let response = await restClient.createVenue(newVenue);
+        let response = await restClient.createVenue(this.state.venue);
         if(response.name) {
-            alert("New Venue Created");
+            alert("Venue Updated");
             this.props.cancel();
         } else {
             alert(response.message);
@@ -48,12 +42,15 @@ class CreateVenue extends Component {
     typesDropdown = () => {
         let options = types.map(type => {
             return (
-                <option value={type}>{type}</option>
+                (this.state.venue.venueType.toLowerCase() === type.toLowerCase()) ?
+                    <option value={type} selected="selected">{type}</option>
+                :
+                    <option value={type}>{type}</option>
             )
         });
 
         return (
-            <select className="input"  id="type" onChange={this.onChange}>
+            <select className="input"  id="venueType" onChange={this.onChange}>
                 {options}
             </select>
         );
@@ -67,18 +64,19 @@ class CreateVenue extends Component {
                 <div className="w3-container w3-center" >
                     <form className="venueForm" onSubmit={this.handleLogin}>
                         <div>
-                            <h1 className="formTitle">Create your venue</h1>
+                            <h1 className="formTitle">Edit your venue</h1>
                         </div>
                         <div className="w3-container w3-right">
                             <div className="w3-container w3-cell">
-                                <h3 htmlFor="venuename">Venue Name:</h3>
+                                <h3 htmlFor="name">Venue Name:</h3>
                             </div>
                             <div className="w3-container w3-cell">
                                 <input
                                     className="input"
                                     type="text"
-                                    id="venuename"
+                                    id="name"
                                     onChange={this.onChange}
+                                    value={this.state.venue.name}
                                 />
                             </div>
                         </div>
@@ -95,7 +93,7 @@ class CreateVenue extends Component {
                                 <h3 htmlFor="image">Image:</h3>
                             </div>
                             <div className="w3-container w3-cell">
-                                <Uploadimage setImage={this.setImageUrl}/>
+                                <Uploadimage setImage={this.setImageUrl} initialImage={this.state.venue.image}/>
                             </div>
                         </div>
                         <div className="w3-container w3-right">
@@ -109,6 +107,7 @@ class CreateVenue extends Component {
                                     id="description"
                                     style={{height:"100px"}}
                                     onChange={this.onChange}
+                                    value={this.state.venue.description}
                                 />
                             </div>
                         </div>
@@ -122,6 +121,7 @@ class CreateVenue extends Component {
                                     type="text"
                                     id="address1"
                                     onChange={this.onChange}
+                                    value={this.state.venue.address1}
                                 />
                             </div>
                         </div>
@@ -135,6 +135,7 @@ class CreateVenue extends Component {
                                     type="text"
                                     id="address2"
                                     onChange={this.onChange}
+                                    value={this.state.venue.address2}
                                 />
                             </div>
                         </div>
@@ -148,6 +149,7 @@ class CreateVenue extends Component {
                                     type="text"
                                     id="town"
                                     onChange={this.onChange}
+                                    value={this.state.venue.town}
                                 />
                             </div>
                         </div>
@@ -161,13 +163,19 @@ class CreateVenue extends Component {
                                     type="text"
                                     id="postcode"
                                     onChange={this.onChange}
+                                    value={this.state.venue.postalCode}
                                 />
                             </div>
                         </div>
                         <div className="w3-container w3-center">
-                            <div className="buttons w3-center">
-                                <button className="w3-text-black" onClick={this.createVenue} style={{width:"150px"}}>
-                                    Create
+                            <div className="w3-container w3-cell buttons">
+                                <button className="w3-text-black" onClick={this.updateVenue} style={{width:"150px"}}>
+                                    Save
+                                </button>
+                            </div>
+                            <div className="w3-container w3-cell buttons">
+                                <button className="w3-text-black" onClick={this.props.cancel} style={{width:"150px"}}>
+                                    Cancel
                                 </button>
                             </div>
                         </div>
@@ -179,10 +187,4 @@ class CreateVenue extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        user: state.user
-    }
-}
-
-export default connect(mapStateToProps)(CreateVenue);
+export default EditVenue;

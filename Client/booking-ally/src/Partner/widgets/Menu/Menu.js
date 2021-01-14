@@ -10,7 +10,7 @@ class Menu extends Component {
         if (this.props.user) {
             return this.props.user.username;
         } else {
-            this.setUser();
+            this.setUser().then();
             return "Account";
         }
     }
@@ -25,11 +25,11 @@ class Menu extends Component {
         let user = this.getUser();
         return (
             <div className="w3-margin w3-dropdown-hover w3-text-white w3-round-large w3-right" style={{backgroundColor:'transparent'}}>
-                <div className="user">{user}</div>
+                <div className="nav-user">{user}</div>
                 <div id="content" className="dropdown w3-dropdown-content w3-card-4 w3-round w3-bar-block w3-border">
-                    <a className="w3-bar-item w3-animate-right user">{user}</a>
+                    <div className="w3-bar-item w3-animate-right menu-user">{user}</div>
                     <div className="hl"/>
-                    <a className="w3-margin-right w3-round w3-hover-blue w3-animate-right "><Logout/></a>
+                    <div className=" w3-round w3-hover-blue w3-animate-right "><Logout/></div>
                 </div>
             </div>
         )

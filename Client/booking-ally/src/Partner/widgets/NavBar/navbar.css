@@ -1,16 +1,15 @@
 @import url("../../../root.css");
 
-.nav{
-    background-color: transparent;
-    height: 2%;
-    position: sticky;
+.partner-nav{
+    background-color: var(--magnolia);
+    height: 12vh;
+    box-shadow: 0 0 10px ;
+    margin-bottom: 5vh;
 }
 
-.dropdown {
-    background-color: white;
-    right:-125%;
-    top:-10px;
-    width:250px;
-    height:220px;
+.partner-title {
+    margin-left: 5%;
+    font-size: 50px;
+    color: var(--grey-dark)
 }
 

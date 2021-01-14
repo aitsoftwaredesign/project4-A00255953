@@ -11,7 +11,7 @@ class Uploadimage extends Component {
             accessKeyId: process.env.REACT_APP_ACCESS_KEY,
             secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY
         },
-        image: ""
+        image: this.props.initialImage ? this.props.initialImage : ""
     }
 
     upload=(e)=>{
