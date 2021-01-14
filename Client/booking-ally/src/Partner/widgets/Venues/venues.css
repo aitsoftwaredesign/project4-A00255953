@@ -11,6 +11,15 @@
     background-color: var(--magnolia-alpha50);
 }
 
-.venue {
-    margin: 1% 1% 1% 25%;
+.partner-venue {
+    margin: 0 1% 5% 20%;
+    background-color: var(--magnolia);
+}
+
+.venue-name {
+    color: var(--grey-dark);
+}
+
+.desc {
+    text-overflow: ellipsis;
 }

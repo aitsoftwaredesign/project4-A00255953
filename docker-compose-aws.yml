@@ -1,0 +1,27 @@
+version: "3.7"
+
+services:
+  nginx:
+    container_name: proxy
+    image: nicholasmurray/proxy-service
+    ports:
+      - 80:80
+    depends_on:
+      - webclient
+      - authservice
+      - venueservice
+
+  webclient:
+    container_name: webclient
+    image: nicholasmurray/booking_ally_client
+
+  authservice:
+    container_name: auth-service
+    image: nicholasmurray/authentication-service
+
+  venueservice:
+    container_name: venue-service
+    image: nicholasmurray/venue-service
+
+
+

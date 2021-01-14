@@ -1,9 +1,9 @@
 .dropdown {
-    background-color: white;
+    background-color: var(--magnolia);
     right:-125%;
-    top:-10px;
+    top:-20px;
     width:250px;
-    height:220px;
+    height:100vh;
 }
 
 .hl {
@@ -13,6 +13,13 @@
     margin-left: 10%;
 }
 
-.user {
+.nav-user {
     font-size: 30px;
+    color: black;
+}
+
+.menu-user {
+    font-size: 30px;
+    color: black;
+    margin-top: 10px;
 }

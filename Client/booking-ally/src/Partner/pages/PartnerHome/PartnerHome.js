@@ -24,7 +24,10 @@ class PartnerHome extends Component {
     getUser = async () => {
         let restClient = new RestClient();
         let response = await restClient.getUser()
-        this.props.setUser(response);
+        if(response) {
+            this.props.setUser(response[1]);
+            this.props.setType(response[0]);
+        }
     }
 
     getVenues = async () => {
@@ -47,14 +50,14 @@ class PartnerHome extends Component {
                 <div className="center">
                     <NavBar/>
                     <div className="w3-container w3-cell w3-center" style={{width:"50%"}}>
-                        <div className="w3-container">
-                            <Venues venues={this.props.partnerVenues}/>
-                        </div>
-                        <div className="w3-container" style={{margin:"5% 1% 5% 27.5%"}}>
-                            <CreateVenueModal/>
+                        <div className="w3-container" style={{width:"100%"}}>
+                            <Venues updateVenues={this.getVenues}/>
                         </div>
                     </div>
                     <div className="w3-container w3-cell">
+                        <div className="w3-container" style={{margin:"0 0 0 25%", width:"100%"}}>
+                            <CreateVenueModal/>
+                        </div>
                     </div>
                 </div>
                 :
@@ -78,6 +81,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         setUser: (user) => { dispatch({ type:'SET_USER', user:user })},
+        setType: (accountType) => { dispatch({ type:'SET_TYPE', account:accountType })},
         setPartnerVenues: (venues) => { dispatch({ type:'SET_PARTNER_VENUES', partnerVenues:venues})}
     }
 }

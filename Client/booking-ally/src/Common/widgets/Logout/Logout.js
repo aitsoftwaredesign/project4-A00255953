@@ -22,16 +22,10 @@ class Logout extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        user: state.user
-    }
-}
-
 const mapDispatchToProps = (dispatch) => {
     return {
         logout: () => { dispatch({ type:'LOGOUT' })}
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Logout);
+export default connect(mapDispatchToProps)(Logout);

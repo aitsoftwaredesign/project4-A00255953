@@ -107,7 +107,6 @@ class PartnerLogin extends Component {
             //Store the token
             this.props.setToken(response.token);
             localStorage.setItem('BAtoken', response.token);
-            this.props.setToken(response.token);
 
             //Store the user
             this.props.setUser(response.account);
@@ -133,13 +132,15 @@ class PartnerLogin extends Component {
             if (response.username) {
                 //Store the user
                 this.props.setUser(response);
-                this.props.setType(AccountTypes.Partner);
 
                 //Store the token
                 let token = await this.restClient.authenticate(user, false);
                 this.props.setToken(token.token);
                 localStorage.setItem('BAtoken', token.token);
                 this.props.setToken(token.token);
+
+                //Register the account type
+                this.props.setType(response.accountType);
 
                 this.props.cancel();
             } else {

@@ -35,8 +35,9 @@ const reducer = (state = initState, action) => {
             localStorage.removeItem('BAtoken');
             return {
                 ...state,
-                user: {},
-                token: ''
+                user: null,
+                token: '',
+                accountType: ''
             }
             break;
         case 'SET_PARTNER_VENUES':

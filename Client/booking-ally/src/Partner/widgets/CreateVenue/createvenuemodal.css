@@ -1,4 +1,12 @@
+@import url("../../../root.css");
+
 .create {
     font-size: 50px;
     white-space: nowrap;
+    background-color: var(--magnolia);
+    color: var(--grey-dark);
+}
+
+.fa-plus-square {
+    color: #0e770e;
 }
