@@ -11,7 +11,7 @@ on:
     branches: [ development ]
 
 env:
-  CLIENT_IMAGE_NAME: nicholasmurray/booking_ally_client 
+  CLIENT_IMAGE_NAME: nicholasmurray/booking_ally_client
 
 jobs:
   build-service:
