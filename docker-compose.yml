@@ -1,19 +1,17 @@
 version: "3.7"
 
 services:
-  nginx:
-    container_name: proxy
-    build: ./Proxy
+  webclient:
+    container_name: webclient
+    build:
+      context: ./Client/booking-ally
+      dockerfile: ./production/Dockerfile
     ports:
       - 80:80
     depends_on:
-      - webclient
       - authservice
       - venueservice
 
-  webclient:
-    container_name: webclient
-    build: ./Client/booking-ally
 
   authservice:
     container_name: auth-service
