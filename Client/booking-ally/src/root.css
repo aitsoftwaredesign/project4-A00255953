@@ -7,14 +7,25 @@
     --forest-green-web: rgb(22, 86, 30);
 
     --maximum-blue-green-alpha50: rgba(91, 192, 190, 0.5);
-    --magnolia-alpha50: rgba(250, 250, 255, 0.75);
+    --magnolia-alpha50: rgba(250, 250, 255, 0.5);
     --dark-spring-green-alpha50: rgba(19, 117, 71, 0.5);
     --prussian-blue-alpha50: rgba(16, 43, 63, 0.5);
-    --grey-dark-alpha: rgba(50, 50, 50, 0.5);
+    --grey-dark-alpha50: rgba(50, 50, 50, 0.5);
     --forest-green-web-alpha50: rgba(36, 130, 50, 0.5);
+
+    --maximum-blue-green-alpha75: rgba(91, 192, 190, 0.25);
+    --magnolia-alpha75: rgba(250, 250, 255, 0.25);
+    --dark-spring-green-alpha75: rgba(19, 117, 71, 0.25);
+    --prussian-blue-alpha75: rgba(16, 43, 63, 0.25);
+    --grey-dark-alpha75: rgba(50, 50, 50, 0.25);
+    --forest-green-web-alpha75: rgba(36, 130, 50, 0.25);
 
 }
 
 html::-webkit-scrollbar {
     display: none;
+}
+
+body {
+    background-color: transparent !important;
 }
