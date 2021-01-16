@@ -1,14 +1,19 @@
 version: "3.7"
 
 services:
-  webclient:
-    container_name: webclient
-    image: nicholasmurray/booking_ally_client
+  nginx:
+    container_name: proxy
+    image: nicholasmurray/proxy-service
     ports:
       - 80:80
     depends_on:
+      - webclient
       - authservice
       - venueservice
+
+  webclient:
+    container_name: webclient
+    image: nicholasmurray/booking_ally_client
 
   authservice:
     container_name: auth-service
