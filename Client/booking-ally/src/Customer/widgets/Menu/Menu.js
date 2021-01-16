@@ -29,7 +29,7 @@ class Menu extends Component {
                 <div id="content" className="dropdown w3-dropdown-content w3-card-4 w3-round w3-bar-block w3-border">
                     <a className="w3-bar-item w3-animate-right">{user}</a>
                     <div className="hl"></div>
-                    <a className="w3-margin-right w3-round w3-hover-blue w3-animate-right "><Logout/></a>
+                    <a className="w3-margin-right w3-round w3-hover-blue w3-animate-right "><Logout logout={this.props.logout}/></a>
                 </div>
             </div>
         )

@@ -31,7 +31,7 @@ class Venues extends Component {
                     <div className="w3-card-4 w3-round w3-center w3-hover-blue w3-mobile partner-venue" key={venue.id}
                          onClick={() => {this.editVenue(venue)
                          }}>
-                        <img className="w3-round" alt="Venue Profile Image" src={venue.image} style={{width: "100%"}}/>
+                        <img className="w3-round" alt="Venue Profile" src={venue.image} style={{width: "100%"}}/>
                         <div className="w3-container w3-center">
                             <h2 className="venue-name">{venue.name}</h2>
                             <p className="desc">{venue.description}</p>
@@ -44,7 +44,7 @@ class Venues extends Component {
                 <div className="w3-card-4 w3-round w3-mobile partner-venue w3-container w3-cell w3-cell-middle"
                      style={{width: "33vw", height: "33vh"}}>
                     <h1 className="venue-name">You have no venues yet..</h1>
-                    <h3 className="venue-name">Create one now with the button to right</h3>
+                    <h3 className="venue-name">Create one now with the button to the right</h3>
                 </div>
         }
 

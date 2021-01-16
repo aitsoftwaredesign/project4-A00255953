@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 
 class Logout extends Component {
 
     handleLogout = (e) => {
         e.preventDefault();
-
-        this.props.logout('');
+        this.props.logout();
 
         window.location.reload();
     }
@@ -22,10 +20,4 @@ class Logout extends Component {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        logout: () => { dispatch({ type:'LOGOUT' })}
-    }
-}
-
-export default connect(mapDispatchToProps)(Logout);
+export default Logout;

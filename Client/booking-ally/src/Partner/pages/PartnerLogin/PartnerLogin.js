@@ -111,6 +111,8 @@ class PartnerLogin extends Component {
             //Store the user
             this.props.setUser(response.account);
             this.props.setType(response.accountType);
+
+            window.location.reload();
         }
     }
 
@@ -235,9 +237,9 @@ class PartnerLogin extends Component {
                                     </button>
                                 </div>
                                 <div className="w3-center">
-                                    <a href="" className="w3-text-black" onClick={this.setRegister}>
+                                    <p className="w3-text-black" onClick={this.setRegister}>
                                         Already a User? Login..
-                                    </a>
+                                    </p>
                                 </div>
                             </div>
                             <br/>
