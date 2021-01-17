@@ -25,6 +25,9 @@ jobs:
         with:
           properties: '[{"jib.username": "${{ secrets.JIB_USER}}" , "jib.password":  "${{ secrets.JIB_PASS}}" }]'
       - name: Build with Maven
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET}}
         run: mvn package --file Backend/services/pom.xml -P ci
   build-client:
     runs-on: ubuntu-latest
