@@ -101,7 +101,7 @@ class CustomerLogin extends Component {
                 email: this.state.email
             }
 
-            let response = await this.restClient.registerCustomer(user);
+            let response = await this.restClient.registerUser(user);
             if (response.username) {
                 //Store the user
                 this.props.setUser(response);

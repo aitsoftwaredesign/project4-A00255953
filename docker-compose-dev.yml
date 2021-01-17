@@ -14,10 +14,19 @@ services:
   authservice:
     container_name: auth-service
     build: Backend/services/authentication
+    environment:
+      MONGODB_URI:
+      JWT_SECRET:
+      BUCKET_NAME:
+      ACCESS_KEY:
+      SECRET_ACCESS_KEY:
 
   venueservice:
     container_name: venue-service
     build: Backend/services/venue
+    environment:
+      MONGODB_URI:
+      JWT_SECRET:
 
 
 

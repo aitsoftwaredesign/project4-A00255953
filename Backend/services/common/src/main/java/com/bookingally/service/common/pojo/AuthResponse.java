@@ -1,9 +1,8 @@
-package com.bookingally.service.common.database.models;
+package com.bookingally.service.common.pojo;
 
-import com.bookingally.service.common.AccountTypes;
 import java.io.Serializable;
 
-public class AuthResponse<T> implements Serializable {
+public class AuthResponse implements Serializable {
 
     private static final long serialVersionUID = -8091879091924046844L;
     private final String jwtToken;

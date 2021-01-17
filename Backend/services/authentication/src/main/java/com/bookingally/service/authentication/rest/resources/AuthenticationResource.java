@@ -1,11 +1,16 @@
 package com.bookingally.service.authentication.rest.resources;
 
-import com.bookingally.service.common.database.models.AuthRequest;
-import com.bookingally.service.common.database.models.AuthResponse;
+import com.bookingally.service.common.ImageUploadKeyUtil;
+import com.bookingally.service.common.database.models.Partner;
+import com.bookingally.service.common.pojo.AuthRequest;
+import com.bookingally.service.common.pojo.AuthResponse;
 import com.bookingally.service.common.rest.security.JwtTokenUtil;
 import com.bookingally.service.common.rest.security.UserDetailsService;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -29,7 +34,12 @@ public class AuthenticationResource {
     private JwtTokenUtil jwtTokenUtil;
 
     @Autowired
+    private ImageUploadKeyUtil uploadKeyUtil;
+
+    @Autowired
     private UserDetailsService userDetailsService;
+
+    private Logger logger = LoggerFactory.getLogger(UserDetailsService.class);
 
     /**
      * Creates a Json Web Token for a given user when given valid credentials.
@@ -64,7 +74,22 @@ public class AuthenticationResource {
         return ResponseEntity.ok(user);
     }
 
-    private void authenticate(String username, String password) throws Exception {
+    @GetMapping("/upload-key")
+    public ResponseEntity<?> getImageUploadKey(@RequestHeader("Authorization") String token ) {
+        token = token.split(" ")[1];
+        String username = jwtTokenUtil.getUsernameFromToken(token);
+        List<Object> user = userDetailsService.loadUserAccount(username);
+
+        try {
+            Partner partner = (Partner) user.get(1);
+            return ResponseEntity.ok(uploadKeyUtil.getUploadValues());
+        } catch (Exception e){
+            logger.warn("Invalid account type: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+
+        private void authenticate(String username, String password) throws Exception {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         } catch (DisabledException e) {

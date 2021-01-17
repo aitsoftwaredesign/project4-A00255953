@@ -2,7 +2,7 @@ package com.bookingally.service.authentication.rest.security
 
 import com.bookingally.service.authentication.main.AuthenticationApplication
 import com.bookingally.service.authentication.rest.resources.AuthenticationResource
-import com.bookingally.service.common.database.models.AuthRequest
+import com.bookingally.service.common.pojo.AuthRequest
 import com.bookingally.service.common.rest.security.JwtTokenUtil
 import com.bookingally.service.common.rest.security.UserDetailsService
 import org.springframework.boot.test.context.SpringBootTest

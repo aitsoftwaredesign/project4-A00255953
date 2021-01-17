@@ -2,12 +2,13 @@ class Routes {
 
     static serverAddress = "";
     static venueExt = "/res/venue";
-    static tokenUser = "/auth/tokenuser";
     static customerExt = "/res/customer";
     static partnerExt = "/res/partner";
     static login = "/auth/authenticate";
     static loginWithAccount = "/auth/authenticate?returnAccount=true";
     static register = "/auth/register";
+    static tokenUser = "/auth/tokenuser";
+    static uploadKey = "/auth/upload-key";
 
     static getAddress() {
         let href = window.location.origin;

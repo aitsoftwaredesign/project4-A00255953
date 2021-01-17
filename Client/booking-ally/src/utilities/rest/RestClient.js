@@ -80,33 +80,11 @@ class RestClient {
     /**
      * Create a customer account
      * @param user - an object containing the username and password
+     * @param partner - is the new user a customer or partner
      * @returns {Promise<User>}
      */
-    async registerCustomer(user) {
-        const url = Routes.getAddress() + Routes.register + "/customer";
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
-            body: JSON.stringify(user)
-        });
-
-        try {
-            return await response.json();
-        } catch (e) {
-            return response;
-        }
-    }
-
-    /**
-     * Create a partner account
-     * @param user - an object containing the username and password
-     * @returns {Promise<User>}
-     */
-    async registerPartner(user) {
-        const url = Routes.getAddress() + Routes.register + "/partner";
+    async registerUser(user, partner = false) {
+        const url = Routes.getAddress() + Routes.register + (!partner) ? "/customer" : "/partner";
         const response = await fetch(url, {
             method: 'POST',
             headers: {
@@ -140,6 +118,26 @@ class RestClient {
         let returnVal = response.status === 200 ? await response.json() : null;
         return returnVal;
     }
+
+    /**
+     * Retrieve the upload key for the image bucket. Only accepts requests from Partner
+     * accounts.
+     * @returns {Promise<any>}
+     */
+    async getUploadDetails() {
+        const url = Routes.getAddress() + Routes.uploadKey;
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+                Authorization: 'Bearer ' + this.getToken()
+            }
+        });
+        let returnVal = response.status === 200 ? await response.json() : null;
+        return returnVal;
+    }
+
 
     getToken() {
         return localStorage.getItem("BAtoken") || '';
