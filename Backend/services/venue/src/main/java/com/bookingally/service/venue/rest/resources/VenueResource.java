@@ -91,9 +91,9 @@ public class VenueResource {
      * @return {@link ResponseEntity} response with {@link HttpStatus} 200 OK if delete is successful.
      */
     @DeleteMapping()
-    public ResponseEntity deleteVenue(@RequestBody Venue venue) {
+    public ResponseEntity<?> deleteVenue(@RequestBody Venue venue) {
         venueRepository.delete(venue);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

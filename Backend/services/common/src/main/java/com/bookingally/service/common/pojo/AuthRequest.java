@@ -1,4 +1,4 @@
-package com.bookingally.service.common.database.models;
+package com.bookingally.service.common.pojo;
 
 import java.io.Serializable;
 

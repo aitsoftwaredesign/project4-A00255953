@@ -1,17 +1,33 @@
 import React, {Component} from 'react';
 import S3FileUpload from 'react-s3';
+import RestClient from "../rest/RestClient";
 
 class Uploadimage extends Component {
 
     state = {
         config: {
-            bucketName: process.env.REACT_APP_BUCKET_NAME,
+            bucketName: "",
             dirName: "venues",
             region: 'us-east-1',
-            accessKeyId: process.env.REACT_APP_ACCESS_KEY,
-            secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY
+            accessKeyId: "",
+            secretAccessKey: ""
         },
         image: this.props.initialImage ? this.props.initialImage : ""
+    }
+    async componentDidMount() {
+        let restClient = new RestClient();
+        let response = await restClient.getUploadDetails();
+        if(response != null) {
+            this.setState({
+                config: {
+                    bucketName: response.bucket,
+                    dirName: "venues",
+                    region: 'us-east-1',
+                    accessKeyId: response.key,
+                    secretAccessKey: response.secret
+                }
+            });
+        }
     }
 
     upload=(e)=>{

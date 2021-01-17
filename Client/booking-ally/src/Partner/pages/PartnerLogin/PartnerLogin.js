@@ -130,7 +130,7 @@ class PartnerLogin extends Component {
                 email: this.state.email
             }
 
-            let response = await this.restClient.registerPartner(user);
+            let response = await this.restClient.registerUser(user, true);
             if (response.username) {
                 //Store the user
                 this.props.setUser(response);

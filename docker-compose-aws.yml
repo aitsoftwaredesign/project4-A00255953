@@ -1,5 +1,6 @@
 version: "3.7"
-
+# Deployment compose file used to deploy docker containers to the aws elastic
+# container service. Docker needs to be in the aws context for this to work.
 services:
   nginx:
     container_name: proxy
@@ -18,10 +19,19 @@ services:
   authservice:
     container_name: auth-service
     image: nicholasmurray/authentication-service
+    environment:
+      MONGODB_URI:
+      JWT_SECRET:
+      BUCKET_NAME:
+      ACCESS_KEY:
+      SECRET_ACCESS_KEY:
 
   venueservice:
     container_name: venue-service
     image: nicholasmurray/venue-service
+    environment:
+      MONGODB_URI:
+      JWT_SECRET:
 
 
 
