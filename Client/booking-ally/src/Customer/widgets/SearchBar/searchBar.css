@@ -1,0 +1,59 @@
+@import url("../../../root.css");
+
+.type-box {
+    background-color: var(--grey-dark-alpha75);
+    margin: 0 15px 0 15px;
+    padding: 0 10px 0 10px;
+}
+
+.type-box:hover {
+    background-color: var(--magnolia-alpha50);
+}
+
+.selected-type-box {
+    background-color: var(--magnolia-alpha50);
+    margin: 0 15px 0 15px;
+    padding: 0 10px 0 10px;
+}
+
+.type-text {
+    color: var(--magnolia);
+}
+
+form {
+    width: 70%;
+    margin-left: 15%;
+}
+
+input[type='text'] {
+    width: 70%;
+    margin: 10px 0 10px 15%;
+    position: center;
+    transition: width 0.5s, margin 0.5s;
+}
+
+input[type='text']:focus {
+    width: 100%;
+    margin-left: 0;
+}
+
+.types {
+    width: 100%;
+}
+
+.search-box {
+    margin: 10px;
+    height: 40px;
+    border-radius: 5px;
+    border-color: transparent;
+}
+
+.search-button {
+    margin: 10px;
+    border-radius: 5px;
+    border-color: transparent;
+    width: 100px;
+    height: 30px;
+    background-color: var(--magnolia);
+    color: var(--grey-dark);
+}

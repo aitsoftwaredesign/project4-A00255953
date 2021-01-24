@@ -2,8 +2,8 @@ package com.bookingally.service.venue.rest.resources;
 
 import com.bookingally.service.common.database.repositories.PartnerRepository;
 import com.bookingally.service.venue.database.models.Venue;
-import com.bookingally.service.common.database.repositories.CustomerRepository;
 import com.bookingally.service.venue.database.repositories.VenueRepository;
+import com.bookingally.service.venue.rest.model.VenueSearchOptions;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,6 @@ import java.util.List;
  * A REST Controller that can be used to carry our CRUD operations for {@link Venue} entities persisted in the database
  * @author Nicholas Murray
  */
-
 @RestController
 @RequestMapping("/venue")
 public class VenueResource {
@@ -41,7 +40,26 @@ public class VenueResource {
     @GetMapping("/{id}")
     public ResponseEntity<Venue> getVenue(@PathVariable String id ) {
         Optional<Venue> venue = venueRepository.findById(id);
-        return venue.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return venue.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    /**
+     * Accepts {@link VenueSearchOptions} to use as criteria for a database search for the {@link Venue}
+     * that match the given values.
+     * @param criteria - The search criteria
+     * @return - The {@link Venue} (s) that match the given criteria
+     */
+    @PostMapping("/find")
+    public ResponseEntity<List<Venue>> findVenues(@RequestBody VenueSearchOptions criteria) {
+        Optional<List<Venue>> venues = venueRepository.searchForVenue(
+                criteria.getName(),
+                criteria.getType(),
+                criteria.getLocation()
+        );
+
+        return venues.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     /**
@@ -63,7 +81,9 @@ public class VenueResource {
     @GetMapping("/partner/{partnerId}")
     public ResponseEntity<List<Venue>> getPartnerVenues(@PathVariable String partnerId) {
         Optional<List<Venue>> venues = venueRepository.findByPartnerId(partnerId);
-        return venues.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+
+        return venues.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     /**
@@ -83,7 +103,6 @@ public class VenueResource {
             final String message = "Invalid Partner ID";
             return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         }
-
     }
 
     /**
@@ -95,5 +114,4 @@ public class VenueResource {
         venueRepository.delete(venue);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }

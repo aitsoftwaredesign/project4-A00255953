@@ -4,6 +4,7 @@ import CustomerLoginModal from "../Login/CustomerLoginModal";
 import headers from "../../../Resources/HeaderImages";
 import './navbar.css';
 import AccountTypes from "../../../Resources/AccountTypes";
+import SearchBar from "../SearchBar/SearchBar";
 
 const words = [
     "service",
@@ -23,12 +24,6 @@ class NavBar extends Component {
         text : '',
         letter : 0
     };
-
-    headingStyle = {
-        "fontSize":"100px",
-        "textShadow":"2px 2px 5px #555",
-        "marginLeft": '15%'
-    }
 
     async componentDidMount() {
         setInterval(this.updateBackgroundImage, 5000);
@@ -85,14 +80,10 @@ class NavBar extends Component {
                     <div className="w3-center">
                         <div className="w3-container text w3-cell-row header" style={{height:"200px"}}>
                             <div className="w3-cell w3-cell-middle" style={{height:"100%"}} >
-                                <h1 className="w3-text-white w3-wide w3-left" style={this.headingStyle}>Book your next {this.state.text}</h1>
+                                <h2 className="w3-text-white text" >Book your next {this.state.text}</h2>
                             </div>
                         </div>
-                        <div className="w3-center">
-                            <form>
-                                <input className="w3-inputw3-white w3-border w3-round-large " type="text" onClick={this.searchBox}/>
-                            </form>
-                        </div>
+                        <SearchBar/>
                     </div>
                 </div>
             </div>
