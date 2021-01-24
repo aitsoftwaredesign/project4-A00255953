@@ -1,9 +1,5 @@
 @import url("../../../root.css");
 
-.loading-text {
-    font-size: 50px;
-}
-
 .loading {
     width:33%;
     margin: 1% 1% 1% 33%;

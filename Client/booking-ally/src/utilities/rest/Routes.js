@@ -2,6 +2,7 @@ class Routes {
 
     static serverAddress = "";
     static venueExt = "/res/venue";
+    static venueSearch = Routes.venueExt + "/find";
     static customerExt = "/res/customer";
     static partnerExt = "/res/partner";
     static login = "/auth/authenticate";

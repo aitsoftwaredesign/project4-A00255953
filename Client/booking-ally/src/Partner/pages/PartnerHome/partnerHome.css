@@ -1,7 +1,7 @@
 @import url("../../../root.css");
 
 html {
-    background-image: linear-gradient(to left, var(--dark-spring-green-alpha50), var(--prussian-blue-alpha50)),
+    background-image: linear-gradient(to left, var(--prussian-blue-alpha50), var(--prussian-blue-alpha50)),
     url("../../../Resources/backgrounds/qbkls.png") !important;
     height: 100%;
 }

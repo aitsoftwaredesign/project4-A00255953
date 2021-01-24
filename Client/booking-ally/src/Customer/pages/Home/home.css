@@ -1,7 +1,7 @@
 @import url("../../../root.css");
 
 html {
-    background-image: linear-gradient( to right, var(--dark-spring-green-alpha50), var(--prussian-blue-alpha50)),
+    background-image: linear-gradient( to right, var(--magnolia-alpha50), var(--prussian-blue-alpha50)),
     url("../../../Resources/backgrounds/memphis-mini.png") !important;
     height: max-content;
 }

@@ -10,7 +10,35 @@ public interface VenueRepository extends MongoRepository<Venue, Integer> {
 
     Optional<List<Venue>> findByPartnerId(String id);
 
-    Optional<Venue> findByName(String name);
+    Optional<List<Venue>> findAllByNameLikeIgnoreCase(String name);
 
-    Optional<List<Venue>> findByVenueType(String type);
+    Optional<List<Venue>> findAllByVenueTypeLikeIgnoreCase(String type);
+
+    Optional<List<Venue>> findAllByTownLikeIgnoreCase(String type);
+
+    Optional<List<Venue>> findAllByNameLikeIgnoreCaseAndVenueTypeLikeIgnoreCase(String name, String venueType);
+
+    Optional<List<Venue>> findAllByNameLikeIgnoreCaseAndTownLikeIgnoreCase(String name, String town);
+
+    Optional<List<Venue>> findAllByVenueTypeLikeIgnoreCaseAndTownLikeIgnoreCase(String venueType, String town);
+
+    Optional<List<Venue>> findAllByNameLikeIgnoreCaseAndVenueTypeLikeIgnoreCaseAndTownLikeIgnoreCase(String name, String venueType, String town);
+
+    default Optional<List<Venue>> searchForVenue(String name, String venueType, String town) {
+        if(!name.equals("") && venueType.equals("") && town.equals("")) {
+            return findAllByNameLikeIgnoreCase(name);
+        } else if(name.equals("") && !venueType.equals("") && town.equals("")) {
+           return findAllByVenueTypeLikeIgnoreCase(venueType);
+        } else if(name.equals("") && venueType.equals("") && !town.equals("")) {
+           return findAllByTownLikeIgnoreCase(town);
+        } else if(!name.equals("") && !venueType.equals("") && town.equals("")) {
+            return findAllByNameLikeIgnoreCaseAndVenueTypeLikeIgnoreCase(name, venueType);
+        } else if(name.equals("") && !venueType.equals("") && !town.equals("")) {
+            return findAllByVenueTypeLikeIgnoreCaseAndTownLikeIgnoreCase(venueType, town);
+        } else if(!name.equals("") && venueType.equals("") && !town.equals("")) {
+            return findAllByNameLikeIgnoreCaseAndTownLikeIgnoreCase(name, town);
+        } else {
+            return findAllByNameLikeIgnoreCaseAndVenueTypeLikeIgnoreCaseAndTownLikeIgnoreCase(name, venueType, town);
+        }
+    }
 }

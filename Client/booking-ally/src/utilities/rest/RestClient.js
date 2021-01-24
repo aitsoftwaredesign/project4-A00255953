@@ -20,6 +20,25 @@ class RestClient {
     }
 
     /**
+     * Sends the criteria to search for a given venue(s)
+     * @package criteria - the search criteria
+     * @returns {Promise<List<Venues>>}
+     */
+    async searchVenues(criteria) {
+        const url = Routes.getAddress() + Routes.venueSearch;
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json'
+            },
+            body: JSON.stringify(criteria)
+        });
+
+        return await response.json();
+    }
+
+    /**
      * Returns a list of all venues from the server for the given partner id
      * @returns {Promise<List<Venues>>}
      */
