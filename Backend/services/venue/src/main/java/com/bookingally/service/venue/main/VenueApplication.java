@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
 @ComponentScan(basePackages = "com.bookingally.service")
-@EntityScan(basePackages={"com.bookingally.service.common.database.models"})
+@EntityScan(basePackages={"com.bookingally.service" })
 @EnableMongoRepositories(basePackages={"com.bookingally.service"})
 public class VenueApplication {
 
@@ -24,7 +24,6 @@ public class VenueApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				// Can just allow `methods` that you need.
 				registry.addMapping("/**").allowedMethods("PUT", "GET", "OPTIONS","DELETE", "POST");
 			}
 		};

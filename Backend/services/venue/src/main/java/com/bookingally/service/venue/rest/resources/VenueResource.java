@@ -2,6 +2,8 @@ package com.bookingally.service.venue.rest.resources;
 
 import com.bookingally.service.common.database.repositories.PartnerRepository;
 import com.bookingally.service.venue.database.models.Venue;
+import com.bookingally.service.venue.database.repositories.BookingRepository;
+import com.bookingally.service.venue.database.repositories.ServiceRepository;
 import com.bookingally.service.venue.database.repositories.VenueRepository;
 import com.bookingally.service.venue.rest.model.VenueSearchOptions;
 import java.util.Optional;
@@ -28,6 +30,12 @@ public class VenueResource {
 
     @Autowired
     private VenueRepository venueRepository;
+
+    @Autowired
+    private ServiceRepository serviceRepository;
+
+    @Autowired
+    private BookingRepository bookingRepository;
 
     @Autowired
     private PartnerRepository partnerRepository;
@@ -106,11 +114,14 @@ public class VenueResource {
     }
 
     /**
-     * Deletes the given {@link Venue} from the Database.
+     * Deletes the given {@link Venue} from the Database, and all associated {@link com.bookingally.service.venue.database.models.Booking}
+     * and {@link com.bookingally.service.venue.database.models.Service}.
      * @return {@link ResponseEntity} response with {@link HttpStatus} 200 OK if delete is successful.
      */
     @DeleteMapping()
     public ResponseEntity<?> deleteVenue(@RequestBody Venue venue) {
+        bookingRepository.deleteAllByVenueId(venue.getId());
+        serviceRepository.deleteAllByVenueId(venue.getId());
         venueRepository.delete(venue);
         return new ResponseEntity<>(HttpStatus.OK);
     }

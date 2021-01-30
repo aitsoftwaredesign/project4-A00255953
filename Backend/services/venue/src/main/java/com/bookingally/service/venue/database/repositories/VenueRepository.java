@@ -5,7 +5,11 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface VenueRepository extends MongoRepository<Venue, Integer> {
+/**
+ * The repository used to carry out CRUD operations on the Venue collection.
+ * @author Nicholas Murray
+ */
+public interface VenueRepository extends MongoRepository<Venue, String> {
     Optional<Venue> findById(String id);
 
     Optional<List<Venue>> findByPartnerId(String id);
@@ -41,4 +45,6 @@ public interface VenueRepository extends MongoRepository<Venue, Integer> {
             return findAllByNameLikeIgnoreCaseAndVenueTypeLikeIgnoreCaseAndTownLikeIgnoreCase(name, venueType, town);
         }
     }
+
+    void deleteAllByPartnerId(String partnerId);
 }

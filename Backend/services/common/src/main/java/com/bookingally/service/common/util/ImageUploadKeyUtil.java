@@ -1,4 +1,4 @@
-package com.bookingally.service.common;
+package com.bookingally.service.common.util;
 
 import com.bookingally.service.common.pojo.UploadResponse;
 import java.io.Serializable;

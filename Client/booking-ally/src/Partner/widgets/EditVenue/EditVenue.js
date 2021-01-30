@@ -2,6 +2,7 @@ import React, { Component} from 'react';
 import RestClient from "../../../utilities/rest/RestClient";
 import types from "../../../Resources/VenueTypes";
 import Uploadimage from "../../../utilities/UploadImage/UploadImage";
+import {connect} from "react-redux";
 
 class EditVenue extends Component {
 
@@ -93,7 +94,7 @@ class EditVenue extends Component {
                                 <h3 htmlFor="image">Image:</h3>
                             </div>
                             <div className="w3-container w3-cell">
-                                <Uploadimage setImage={this.setImageUrl} initialImage={this.state.venue.image}/>
+                                <Uploadimage setImage={this.setImageUrl} initialImage={this.state.venue.image}  partner={this.props.user.id}/>
                             </div>
                         </div>
                         <div className="w3-container w3-right">
@@ -187,4 +188,10 @@ class EditVenue extends Component {
     }
 }
 
-export default EditVenue;
+const mapStateToProps = (state) => {
+    return {
+        user: state.user
+    }
+}
+
+export default connect(mapStateToProps)(EditVenue);

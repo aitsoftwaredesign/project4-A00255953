@@ -7,7 +7,7 @@ class Uploadimage extends Component {
     state = {
         config: {
             bucketName: "",
-            dirName: "venues",
+            dirName: "venues/"+ this.props.partner,
             region: 'us-east-1',
             accessKeyId: "",
             secretAccessKey: ""
@@ -21,7 +21,7 @@ class Uploadimage extends Component {
             this.setState({
                 config: {
                     bucketName: response.bucket,
-                    dirName: "venues",
+                    dirName: "venues/"+ this.props.partner,
                     region: 'us-east-1',
                     accessKeyId: response.key,
                     secretAccessKey: response.secret

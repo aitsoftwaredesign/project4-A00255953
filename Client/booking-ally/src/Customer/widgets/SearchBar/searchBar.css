@@ -25,14 +25,14 @@ form {
     margin-left: 15%;
 }
 
-input[type='text'] {
+.search-box {
     width: 70%;
     margin: 10px 0 10px 15%;
     position: center;
     transition: width 0.5s, margin 0.5s;
 }
 
-input[type='text']:focus {
+.search-box:focus {
     width: 100%;
     margin-left: 0;
 }

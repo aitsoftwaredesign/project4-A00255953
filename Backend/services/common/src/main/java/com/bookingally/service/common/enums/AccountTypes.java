@@ -1,4 +1,4 @@
-package com.bookingally.service.common;
+package com.bookingally.service.common.enums;
 
 public enum AccountTypes {
 
