@@ -1,6 +1,6 @@
 package com.bookingally.service.common.rest.security;
 
-import com.bookingally.service.common.AccountTypes;
+import com.bookingally.service.common.enums.AccountTypes;
 import com.bookingally.service.common.database.models.Account;
 import com.bookingally.service.common.database.models.Customer;
 import com.bookingally.service.common.database.models.Partner;
@@ -41,12 +41,11 @@ public class UserDetailsService implements org.springframework.security.core.use
      * @return the user credentials
      * @throws UsernameNotFoundException
      */
-
     @Override
     public UserDetails loadUserByUsername(String username) {
         UserDetails userDetails = null;
         try {
-            Customer storedCustomer = getCustomer(username).get();
+            Customer storedCustomer = getCustomerByName(username).get();
             userDetails= new User(storedCustomer.getUsername(), storedCustomer.getPassword(), new ArrayList<>());
         } catch (NoSuchElementException e) {
             logger.warn("No Customer found with username:" + username);
@@ -54,11 +53,40 @@ public class UserDetailsService implements org.springframework.security.core.use
 
         if(userDetails == null) {
             try {
-                Partner storedPartner = getPartner(username).get();
+                Partner storedPartner = getPartnerByName(username).get();
                 userDetails = new User(storedPartner.getUsername(), storedPartner.getPassword(), new ArrayList<>());
             } catch (NoSuchElementException e) {
                 logger.warn("No Partner found with username:" + username);
                 throw new UsernameNotFoundException("No user found with username: " + username);
+            }
+        }
+
+        return userDetails;
+    }
+
+    /**
+     * Searches for either a {@link Partner} or {@link Customer} account by the given username, we check for either account
+     * to prevent the re-use of usernames and possible problems with unauthorized access to partner accounts.
+     * @param id
+     * @return the user credentials
+     * @throws UsernameNotFoundException
+     */
+    public UserDetails loadUserById(String id) {
+        UserDetails userDetails = null;
+        try {
+            Customer storedCustomer = getCustomerById(id).get();
+            userDetails= new User(storedCustomer.getUsername(), storedCustomer.getPassword(), new ArrayList<>());
+        } catch (NoSuchElementException e) {
+            logger.warn("No Customer found with id:" + id);
+        }
+
+        if(userDetails == null) {
+            try {
+                Partner storedPartner = getPartnerById(id).get();
+                userDetails = new User(storedPartner.getUsername(), storedPartner.getPassword(), new ArrayList<>());
+            } catch (NoSuchElementException e) {
+                logger.warn("No Partner found with id:" + id);
+                throw new UsernameNotFoundException("No user found with username: " + id);
             }
         }
 
@@ -75,14 +103,14 @@ public class UserDetailsService implements org.springframework.security.core.use
         Account account = null;
         String type = AccountTypes.CUSTOMER.getLabel();
         try {
-            account = getCustomer(username).get();
+            account = getCustomerByName(username).get();
         } catch (NoSuchElementException e) {
             logger.warn("No Customer found with username:" + username);
         }
 
         if(account == null) {
             try {
-                account = getPartner(username).get();
+                account = getPartnerByName(username).get();
                 type = AccountTypes.PARTNER.getLabel();
             } catch (NoSuchElementException e) {
                 logger.warn("No Partner found with username:" + username);
@@ -98,7 +126,7 @@ public class UserDetailsService implements org.springframework.security.core.use
         return response;
     }
 
-    private Optional<Customer> getCustomer(String username) {
+    private Optional<Customer> getCustomerByName(String username) {
         Optional<Customer> customer = customerRepository.findByUsername(username);
         if(customer.isPresent()) {
             Customer storedCustomer = customer.get();
@@ -108,8 +136,28 @@ public class UserDetailsService implements org.springframework.security.core.use
         }
     }
 
-    private Optional<Partner> getPartner(String username) {
+    private Optional<Partner> getPartnerByName(String username) {
         Optional<Partner> partner = partnerRepository.findByUsername(username);
+        if(partner.isPresent()) {
+            Partner storedPartner = partner.get();
+            return Optional.of( storedPartner);
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    private Optional<Customer> getCustomerById(String id) {
+        Optional<Customer> customer = customerRepository.findById(id);
+        if(customer.isPresent()) {
+            Customer storedCustomer = customer.get();
+            return Optional.of( storedCustomer);
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    private Optional<Partner> getPartnerById(String id) {
+        Optional<Partner> partner = partnerRepository.findByUsername(id);
         if(partner.isPresent()) {
             Partner storedPartner = partner.get();
             return Optional.of( storedPartner);

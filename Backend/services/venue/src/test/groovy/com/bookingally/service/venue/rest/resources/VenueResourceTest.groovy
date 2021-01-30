@@ -2,7 +2,8 @@ package com.bookingally.service.venue.rest.resources
 
 import com.bookingally.service.common.database.repositories.PartnerRepository
 import com.bookingally.service.venue.database.models.Venue
-import com.bookingally.service.common.database.repositories.CustomerRepository
+import com.bookingally.service.venue.database.repositories.BookingRepository
+import com.bookingally.service.venue.database.repositories.ServiceRepository
 import com.bookingally.service.venue.database.repositories.VenueRepository
 import com.bookingally.service.venue.main.VenueApplication
 import org.springframework.boot.test.context.SpringBootTest
@@ -17,13 +18,18 @@ class VenueResourceTest extends Specification {
             new Venue("1", "10", "Murrays Pub", "A lovely little pub", "PUB", "Main Road", null, "Mullingar")
     ]
 
+    BookingRepository bookingRepository = Mock()
     VenueRepository venueRepository = Mock()
+    ServiceRepository serviceRepository = Mock()
     PartnerRepository userRepository = Mock()
 
     def venueResource = new VenueResource()
 
     def setup() {
         venueResource.venueRepository = venueRepository
+        venueResource.serviceRepository = serviceRepository
+        venueResource.bookingRepository = bookingRepository
+        venueResource.partnerRepository = userRepository
     }
 
     def "When get venue is called with a valid id the venue should be returned"() {
@@ -55,7 +61,6 @@ class VenueResourceTest extends Specification {
     def "Venue should be persisted and return status 201 CREATED with the new venue"() {
         given: "A mock Venue repository that mimics the saving of venues"
             venue.setPartnerId(partner_id)
-            venueResource.partnerRepository = userRepository
             userRepository.existsById("1") >> true
             userRepository.existsById("9") >> false
             venueRepository.save(venue) >> venue
@@ -72,11 +77,14 @@ class VenueResourceTest extends Specification {
 
     def "Venue should be deleted from the database and return status 200 OK"() {
         given: "A mock Venue repository that mimics the deleting"
-        venueRepository.delete(venue)
+            venueRepository.delete(venue)
         when: "delete venue is called"
-        def response = venueResource.deleteVenue(venue)
+            def response = venueResource.deleteVenue(venue)
         then: "response should contain status 200 CREATED"
-        response.statusCodeValue == 200
+            1 * serviceRepository.deleteAllByVenueId(_)
+            1 * bookingRepository.deleteAllByVenueId(_)
+            1 * venueRepository.delete(_)
+            response.statusCodeValue == 200
     }
 
     def "When get all partner venues is called with a valid id the venues should be returned"() {

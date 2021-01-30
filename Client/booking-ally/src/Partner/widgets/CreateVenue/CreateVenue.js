@@ -95,7 +95,7 @@ class CreateVenue extends Component {
                                 <h3 htmlFor="image">Image:</h3>
                             </div>
                             <div className="w3-container w3-cell">
-                                <Uploadimage setImage={this.setImageUrl}/>
+                                <Uploadimage setImage={this.setImageUrl} partner={this.props.user.id}/>
                             </div>
                         </div>
                         <div className="w3-container w3-right">

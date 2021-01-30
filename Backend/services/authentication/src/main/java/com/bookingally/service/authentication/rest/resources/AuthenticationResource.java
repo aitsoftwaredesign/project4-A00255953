@@ -1,6 +1,6 @@
 package com.bookingally.service.authentication.rest.resources;
 
-import com.bookingally.service.common.ImageUploadKeyUtil;
+import com.bookingally.service.common.util.ImageUploadKeyUtil;
 import com.bookingally.service.common.database.models.Partner;
 import com.bookingally.service.common.pojo.AuthRequest;
 import com.bookingally.service.common.pojo.AuthResponse;

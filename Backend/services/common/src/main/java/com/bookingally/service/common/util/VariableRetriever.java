@@ -1,4 +1,4 @@
-package com.bookingally.service.common;
+package com.bookingally.service.common.util;
 
 public class VariableRetriever {
 
