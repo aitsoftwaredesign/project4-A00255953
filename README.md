@@ -17,6 +17,6 @@ Just as a microservice deployment can scale out it can also shrink by shutting d
 ### Current Architecture Diagram
 ![System Architecture](/Resources/system-architecture-with-proxy.png)
 
-(Previous architecture revisions can be found in the "Resources" folder)
+(Previous architecture revisions can be found in the [Resources](./Resources) folder)
 
 
