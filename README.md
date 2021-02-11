@@ -15,7 +15,7 @@ Using a microservices architecture allows the system to be scaled to meet increa
 Just as a microservice deployment can scale out it can also shrink by shutting down any uneeded instances of individual services allowing for cost/energy savings.
 
 ### Current Architecture Diagram
-![System Architecture](/Resources/system-architecture-with-proxy.png)
+![System Architecture](/Resources/system-architecture-image-service.png)
 
 (Previous architecture revisions can be found in the [Resources](./Resources) folder)
 
