@@ -72,3 +72,9 @@ packages/react-devtools-extensions/.tempUserDataDir
 packages/react-devtools-inline/dist
 packages/react-devtools-shell/dist
 packages/react-devtools-scheduling-profiler/dist
+
+Backend/services/**/*.jpg
+Backend/services/**/*.png
+Backend/services/**/*.PNG
+Backend/services/**/*.JPEG
+Backend/services/**/*.JPG
