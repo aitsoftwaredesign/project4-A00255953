@@ -15,7 +15,7 @@ import spock.lang.Specification
 class ImageResourceTest extends Specification {
 
     @Shared
-    MockMultipartFile image = new MockMultipartFile("image.jpg",  "image.jpg", "image/jpeg" )
+    MockMultipartFile image = new MockMultipartFile("image.jpg",  "target/image.jpg", "image/jpeg" )
 
     @Shared
     ImageDeleteRequest deleteRequest = new ImageDeleteRequest("image.jpeg")
