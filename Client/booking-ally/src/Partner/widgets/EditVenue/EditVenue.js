@@ -7,7 +7,9 @@ import {connect} from "react-redux";
 class EditVenue extends Component {
 
     state = {
-        venue: this.props.venue
+        page:0,
+        venue: this.props.venue,
+        previousImage: null
     }
 
     restClient = new RestClient();
@@ -20,12 +22,42 @@ class EditVenue extends Component {
         });
     }
 
+    onChangeTime = (e) => {
+        let day = e.target.id.split(".");
+        let currentHours = this.state.venue.businessWeek[day[0]].businessHours.split("_");
+
+        if(day[1] === "open") {
+            currentHours[0] = e.target.value;
+        } else if(day[1] === "close") {
+            currentHours[1] = e.target.value;
+        }
+
+        let updatedVenue = this.state.venue;
+        updatedVenue.businessWeek[day[0]].businessHours = currentHours[0] + "_" + currentHours[1];
+
+        this.setState({
+            venue: updatedVenue
+        });
+    }
+
     setImageUrl = (url) => {
         let venue = this.state.venue;
+        let previousImage = venue.image;
         venue.image = url;
         this.setState({
-            venue: venue
+            venue: venue,
+            previousImage: previousImage
         });
+    }
+
+    publishVenue = async (e) => {
+        e.preventDefault();
+        let update = this.state.venue;
+        update.active = true;
+        this.setState({
+            venue: update
+        })
+        await this.updateVenue(e);
     }
 
     updateVenue = async (e) => {
@@ -34,6 +66,8 @@ class EditVenue extends Component {
         let response = await restClient.createVenue(this.state.venue);
         if(response.name) {
             alert("Venue Updated");
+            if(this.state.previousImage !== null) await restClient.deleteImage(this.state.previousImage);
+            this.props.refresh();
             this.props.cancel();
         } else {
             alert(response.message);
@@ -43,23 +77,320 @@ class EditVenue extends Component {
     typesDropdown = () => {
         let options = types.map(type => {
             return (
-                (this.state.venue.venueType.toLowerCase() === type.toLowerCase()) ?
-                    <option value={type} selected="selected">{type}</option>
-                :
-                    <option value={type}>{type}</option>
+                <option value={type} key={type}>{type}</option>
             )
         });
 
+        let selected = this.state.venue.venueType;
         return (
-            <select className="input"  id="venueType" onChange={this.onChange}>
+            <select className="input"  id="venueType" defaultValue={selected} onChange={this.onChange}>
                 {options}
             </select>
         );
     }
 
-    render() {
-        let venueTypes = this.typesDropdown();
+    setPage = (e) => {
+        e.preventDefault();
+        this.setState({
+            page: (this.state.page === 0 ) ? 1 : 0
+        });
+    }
 
+    onClosed = (e) => {
+        let element = e.target.id.toString().substring(3, e.target.id.toString().length)
+        if (document.getElementById(element).classList.contains("w3-border-green")) {
+            document.getElementById(element).classList.remove("w3-border-green");
+            document.getElementById(element).classList.add("w3-border-red");
+        } else if (document.getElementById(element).classList.contains("w3-border-red")) {
+            document.getElementById(element).classList.remove("w3-border-red");
+            document.getElementById(element).classList.add("w3-border-green");
+        }
+
+        if(e.target.checked) {
+            let updatedVenue = this.state.venue;
+            updatedVenue.businessWeek[element].businessHours = "00:00_00:00";
+
+            this.setState({
+                venue: updatedVenue
+            });
+        }
+    }
+
+    formPageTwo = () => {
+        return (
+            <div className="modal w3-container w3-center" >
+                <form className="venueForm" onSubmit={this.handleLogin}>
+                    <div>
+                        <h1 className="formTitle">Create your venue</h1>
+                    </div>
+                    <div>
+                        <h2 className="formTitle">Business Hours</h2>
+                    </div>
+                    <div className="w3-container w3-cell-row w3-border w3-border-green" id="monday">
+                        <div className="w3-container w3-cell">
+                            <h3 htmlFor="monday" className="day-header">Monday:     </h3>
+                        </div>
+                        <div className="w3-container w3-cell time-picker">
+                            <label className="time-label time">Open</label>
+                            <input
+                                className="time"
+                                type="time"
+                                id="monday.open"
+                                value={this.state.venue.businessWeek.monday.businessHours.split('_')[0].toString()}
+                                onChange={this.onChangeTime}
+                            />
+                        </div>
+                        <div className="w3-container w3-cell time-picker">
+                            <label className="time-label time">Close</label>
+                            <input
+                                className="time"
+                                type="time"
+                                id="monday.close"
+                                value={this.state.venue.businessWeek.monday.businessHours.split('_')[1].toString()}
+                                onChange={this.onChangeTime}
+                            />
+                        </div>
+                        <div className="w3-container w3-cell time-picker">
+                            <label className="time-label time">Closed</label>
+                            <input
+                                className="time"
+                                type="checkbox"
+                                id="id.monday"
+                                onChange={this.onClosed}
+                            />
+                        </div>
+                    </div>
+                    <div className="w3-container w3-cell-row w3-border w3-border-green" id="tuesday">
+                        <div className="w3-container w3-cell">
+                            <h3 htmlFor="tuesday" className="day-header">Tuesday:</h3>
+                        </div>
+                        <div className="w3-container w3-cell time-picker">
+                            <label className="time-label time">Open</label>
+                            <input
+                                className="time"
+                                type="time"
+                                id="tuesday.open"
+                                value={this.state.venue.businessWeek.tuesday.businessHours.split('_')[0].toString()}
+                                onChange={this.onChangeTime}
+                            />
+                        </div>
+                        <div className="w3-container w3-cell time-picker">
+                            <label className="time-label time">Close</label>
+                            <input
+                                className="time"
+                                type="time"
+                                id="tuesday.close"
+                                value={this.state.venue.businessWeek.tuesday.businessHours.split('_')[1].toString()}
+                                onChange={this.onChangeTime}
+                            />
+                        </div>
+                        <div className="w3-container w3-cell time-picker">
+                            <label className="time-label time">Closed</label>
+                            <input
+                                className="time"
+                                type="checkbox"
+                                id="id.tuesday"
+                                onChange={this.onClosed}
+                            />
+                        </div>
+                    </div>
+                    <div className="w3-container w3-cell-row w3-border w3-border-green" id="wednesday">
+                        <div className="w3-container w3-cell">
+                            <h3 htmlFor="wednesday" className="day-header">Wednesday:</h3>
+                        </div>
+                        <div className="w3-container w3-cell time-picker">
+                            <label className="time-label time">Open</label>
+                            <input
+                                className="time"
+                                type="time"
+                                id="wednesday.open"
+                                value={this.state.venue.businessWeek.wednesday.businessHours.split('_')[0].toString()}
+                                onChange={this.onChangeTime}
+                            />
+                        </div>
+                        <div className="w3-container w3-cell time-picker">
+                            <label className="time-label time">Close</label>
+                            <input
+                                className="time"
+                                type="time"
+                                id="wednesday.close"
+                                value={this.state.venue.businessWeek.wednesday.businessHours.split('_')[1].toString()}
+                                onChange={this.onChangeTime}
+                            />
+                        </div>
+                        <div className="w3-container w3-cell time-picker">
+                            <label className="time-label time">Closed</label>
+                            <input
+                                className="time"
+                                type="checkbox"
+                                id="id.wednesday"
+                                onChange={this.onClosed}
+                            />
+                        </div>
+                    </div>
+                    <div className="w3-container w3-cell-row w3-border w3-border-green" id="thursday">
+                        <div className="w3-container w3-cell">
+                            <h3 htmlFor="thursday" className="day-header">Thursday:</h3>
+                        </div>
+                        <div className="w3-container w3-cell time-picker">
+                            <label className="time-label time">Open</label>
+                            <input
+                                className="time"
+                                type="time"
+                                id="thursday.open"
+                                value={this.state.venue.businessWeek.thursday.businessHours.split('_')[0].toString()}
+                                onChange={this.onChangeTime}
+                            />
+                        </div>
+                        <div className="w3-container w3-cell time-picker">
+                            <label className="time-label time">Close</label>
+                            <input
+                                className="time"
+                                type="time"
+                                id="thursday.close"
+                                value={this.state.venue.businessWeek.thursday.businessHours.split('_')[1].toString()}
+                                onChange={this.onChangeTime}
+                            />
+                        </div>
+                        <div className="w3-container w3-cell time-picker">
+                            <label className="time-label time">Closed</label>
+                            <input
+                                className="time"
+                                type="checkbox"
+                                id="id.thursday"
+                                onChange={this.onClosed}
+                            />
+                        </div>
+                    </div>
+                    <div className="w3-container w3-cell-row w3-border w3-border-green" id="friday">
+                        <div className="w3-container w3-cell">
+                            <h3 htmlFor="friday" className="day-header">Friday:</h3>
+                        </div>
+                        <div className="w3-container w3-cell time-picker">
+                            <label className="time-label time">Open</label>
+                            <input
+                                className="time"
+                                type="time"
+                                id="friday.open"
+                                value={this.state.venue.businessWeek.friday.businessHours.split('_')[0].toString()}
+                                onChange={this.onChangeTime}
+                            />
+                        </div>
+                        <div className="w3-container w3-cell time-picker">
+                            <label className="time-label time">Close</label>
+                            <input
+                                className="time"
+                                type="time"
+                                id="friday.close"
+                                value={this.state.venue.businessWeek.friday.businessHours.split('_')[1].toString()}
+                                onChange={this.onChangeTime}
+                            />
+                        </div>
+                        <div className="w3-container w3-cell time-picker">
+                            <label className="time-label time">Closed</label>
+                            <input
+                                className="time"
+                                type="checkbox"
+                                id="id.friday"
+                                onChange={this.onClosed}
+                            />
+                        </div>
+                    </div>
+                    <div className="w3-container w3-cell-row w3-border w3-border-green" id="saturday">
+                        <div className="w3-container w3-cell">
+                            <h3 htmlFor="saturday" className="day-header">Saturday:</h3>
+                        </div>
+                        <div className="w3-container w3-cell time-picker">
+                            <label className="time-label time">Open</label>
+                            <input
+                                className="time"
+                                type="time"
+                                id="saturday.open"
+                                value={this.state.venue.businessWeek.saturday.businessHours.split('_')[0].toString()}
+                                onChange={this.onChangeTime}
+                            />
+                        </div>
+                        <div className="w3-container w3-cell time-picker">
+                            <label className="time-label time">Close</label>
+                            <input
+                                className="time"
+                                type="time"
+                                id="saturday.close"
+                                value={this.state.venue.businessWeek.saturday.businessHours.split('_')[1].toString()}
+                                onChange={this.onChangeTime}
+                            />
+                        </div>
+                        <div className="w3-container w3-cell time-picker">
+                            <label className="time-label time">Closed</label>
+                            <input
+                                className="time"
+                                type="checkbox"
+                                id="id.saturday"
+                                onChange={this.onClosed}
+                            />
+                        </div>
+                    </div>
+                    <div className="w3-container w3-cell-row w3-border w3-border-green" id="sunday">
+                        <div className="w3-container w3-cell">
+                            <h3 htmlFor="sunday" className="day-header">Sunday:</h3>
+                        </div>
+                        <div className="w3-container w3-cell time-picker">
+                            <label className="time-label time">Open</label>
+                            <input
+                                className="time"
+                                type="time"
+                                id="sunday.open"
+                                value={this.state.venue.businessWeek.sunday.businessHours.split('_')[0].toString()}
+                                onChange={this.onChangeTime}
+                            />
+                        </div>
+                        <div className="w3-container w3-cell time-picker">
+                            <label className="time-label time">Close</label>
+                            <input
+                                className="time"
+                                type="time"
+                                id="sunday.close"
+                                value={this.state.venue.businessWeek.sunday.businessHours.split('_')[1].toString()}
+                                onChange={this.onChangeTime}
+                            />
+                        </div>
+                        <div className="w3-container w3-cell time-picker">
+                            <label className="time-label time">Closed</label>
+                            <input
+                                className="time"
+                                type="checkbox"
+                                id="id.sunday"
+                                onChange={this.onClosed}
+                            />
+                        </div>
+                    </div>
+                    <div className="w3-container button-container w3-cell-row">
+                        <div className="w3-cell">
+                            <button className="buttons w3-text-black" onClick={this.setPage} style={{width:"150px"}}>
+                                <i className="fa fa-arrow-left" /> Previous
+                            </button>
+                        </div>
+                        <div className="w3-cell">
+                            <button className="buttons w3-text-black" onClick={this.props.cancel} style={{width:"150px"}}>
+                                Cancel
+                            </button>
+                            <button title="Saves and makes your Venue viewable to customers" className="buttons w3-text-black w3-green" onClick={this.publishVenue} style={{width:"150px"}} >
+                                Save and Publish
+                            </button>
+                        </div>
+                        <div className="w3-cell">
+                            <button title="Saves your Venue for later, not visible to Customers" className="buttons w3-text-black w3-green" onClick={this.updateVenue} style={{width:"150px"}}>
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        )
+    }
+
+    formPageOne = () => {
+        let venueTypes = this.typesDropdown();
         return (
             <div className="modal">
                 <div className="w3-container w3-center" >
@@ -168,15 +499,20 @@ class EditVenue extends Component {
                                 />
                             </div>
                         </div>
-                        <div className="w3-container w3-center">
-                            <div className="w3-container w3-cell buttons">
-                                <button className="w3-text-black" onClick={this.updateVenue} style={{width:"150px"}}>
+                        <div className="button-container w3-container w3-center">
+                            <div className="w3-center w3-cell">
+                                <button className="buttons w3-text-black" onClick={this.updateVenue} style={{width:"150px"}}>
                                     Save
                                 </button>
                             </div>
-                            <div className="w3-container w3-cell buttons">
-                                <button className="w3-text-black" onClick={this.props.cancel} style={{width:"150px"}}>
+                            <div className="w3-center w3-cell">
+                                <button className="buttons w3-text-black" onClick={this.props.cancel} style={{width:"150px"}}>
                                     Cancel
+                                </button>
+                            </div>
+                            <div className="w3-center w3-cell">
+                                <button className="buttons w3-text-black w3-green" onClick={this.setPage} style={{width:"150px"}}>
+                                    Next <i className="fa fa-arrow-right" />
                                 </button>
                             </div>
                         </div>
@@ -184,6 +520,13 @@ class EditVenue extends Component {
                     </form>
                 </div>
             </div>
+        )
+    }
+
+    render() {
+        let currentPage = (this.state.page === 0) ? this.formPageOne() : this.formPageTwo();
+        return (
+            currentPage
         )
     }
 }

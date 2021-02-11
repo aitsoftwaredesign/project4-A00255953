@@ -64,9 +64,6 @@ class NavBar extends Component {
         });
     }
 
-    searchBox = () => {
-    }
-
     render() {
         const loggedin = (this.props.token !== '' && this.props.accountType === AccountTypes.Customer);
         let loginModal = <CustomerLoginModal loggedin={loggedin}/>;

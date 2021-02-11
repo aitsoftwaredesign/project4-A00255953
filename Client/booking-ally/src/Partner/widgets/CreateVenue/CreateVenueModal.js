@@ -5,7 +5,7 @@ import CreateVenue from "./CreateVenue";
 
 Modal.setAppElement(document.getElementById('root'));
 
-export default function CreateVenueModal(){
+export default function CreateVenueModal({refresh}){
     const [modalIsOpen,setIsOpen] = React.useState(false);
 
     let customStyles = {
@@ -24,6 +24,7 @@ export default function CreateVenueModal(){
 
     function closeModal() {
         setIsOpen(false);
+        window.location.reload();
     }
 
     function openModal() {
@@ -32,14 +33,14 @@ export default function CreateVenueModal(){
 
     return (
             <div>
-                <h1 className="create w3-card-4 w3-sans-serif w3-container w3-cell output w3-hover-blue w3-round" onClick={openModal}>
+                <h1 className="create w3-sans-serif w3-container w3-cell w3-hover-blue w3-round" onClick={openModal}>
                     <i className="fas fa-plus-square"/> Create Venue </h1>
                 <Modal
                     isOpen={modalIsOpen}
                     onRequestClose={closeModal}
                     style={customStyles}
                     contentLabel="Create Venue Form">
-                    <CreateVenue cancel={closeModal}/>
+                    <CreateVenue cancel={closeModal} refresh={refresh}/>
                 </Modal>
             </div>
     )

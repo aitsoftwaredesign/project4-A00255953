@@ -3,13 +3,14 @@ version: "3.7"
 # reload of the react site on port 80 without the container
 services:
   nginx:
-    container_name: proxy
+    container_name: proxy-service
     build: Proxy/dev
     ports:
       - "1405:80"
     depends_on:
       - authservice
       - venueservice
+      - imageservice
 
   authservice:
     container_name: auth-service
@@ -17,9 +18,6 @@ services:
     environment:
       MONGODB_URI:
       JWT_SECRET:
-      BUCKET_NAME:
-      ACCESS_KEY:
-      SECRET_ACCESS_KEY:
 
   venueservice:
     container_name: venue-service
@@ -27,6 +25,16 @@ services:
     environment:
       MONGODB_URI:
       JWT_SECRET:
+
+  imageservice:
+    container_name: image-service
+    build: Backend/services/images
+    environment:
+      MONGODB_URI:
+      JWT_SECRET:
+      BUCKET_NAME:
+      ACCESS_KEY:
+      SECRET_ACCESS_KEY:
 
 
 

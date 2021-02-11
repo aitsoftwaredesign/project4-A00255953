@@ -32,7 +32,7 @@ public class Service {
     private float cost;
 
     /**
-     * The length of time the service takes. Format HH_MM.
+     * The length of time the service takes. Format HH:MM.
      */
     private String length;
 

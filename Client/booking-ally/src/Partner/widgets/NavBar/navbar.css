@@ -1,7 +1,7 @@
 @import url("../../../root.css");
 
 .partner-nav{
-    background-color: var(--magnolia-alpha50);
+    background-color: var(--magnolia);
     height: 12vh;
     box-shadow: 0 0 10px ;
     margin-bottom: 5vh;

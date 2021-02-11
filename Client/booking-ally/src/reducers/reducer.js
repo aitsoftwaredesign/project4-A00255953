@@ -1,8 +1,16 @@
+import RestClient from "../utilities/rest/RestClient";
+
 const initState = {
     venues: [],
     user: null,
     accountType: "",
     token: localStorage.getItem('BAtoken') !== null ? localStorage.getItem('BAtoken') : ''
+}
+
+const getServices = async (id) => {
+    let restClient = new RestClient();
+    let services = await restClient.getServicesByVenueId(id);
+    return services;
 }
 
 const reducer = (state = initState, action) => {
@@ -44,6 +52,22 @@ const reducer = (state = initState, action) => {
             return {
                 ...state,
                 partnerVenues: action.partnerVenues
+            }
+        case 'SET_SERVICES':
+            return {
+                ...state,
+                services: action.services
+            }
+        case 'SET_SELECTED_SERVICE':
+            return {
+                ...state,
+                selectedService: action.service
+            }
+        case 'GET_SERVICES':
+            let services = getServices(action.id);
+            return {
+                ...state,
+                services: services
             }
     }
     return state

@@ -1,8 +1,10 @@
 version: "3.7"
-
+# Deployment compose file used to build and deploy the docker containers in the
+# current docker context.
+# To deploy system open a terminal in the project directory and run "docker-compose up"
 services:
   nginx:
-    container_name: proxy
+    container_name: proxy-service
     build: ./Proxy/dev
     ports:
       - "80:80"
@@ -10,6 +12,7 @@ services:
       - authservice
       - venueservice
       - webclient
+      - imageservice
 
   webclient:
     container_name: webclient
@@ -34,5 +37,14 @@ services:
       MONGODB_URI:
       JWT_SECRET:
 
+  imageservice:
+    container_name: image-service
+    build: Backend/services/images
+    environment:
+      MONGODB_URI:
+      JWT_SECRET:
+      BUCKET_NAME:
+      ACCESS_KEY:
+      SECRET_ACCESS_KEY:
 
 

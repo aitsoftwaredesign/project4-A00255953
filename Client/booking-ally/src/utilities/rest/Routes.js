@@ -1,15 +1,21 @@
 class Routes {
 
     static serverAddress = "";
-    static venueExt = "/res/venue";
+
+    static resourceExt = "/res";
+    static venueExt = Routes.resourceExt + "/venue";
     static venueSearch = Routes.venueExt + "/find";
-    static customerExt = "/res/customer";
-    static partnerExt = "/res/partner";
-    static login = "/auth/authenticate";
-    static loginWithAccount = "/auth/authenticate?returnAccount=true";
-    static register = "/auth/register";
-    static tokenUser = "/auth/tokenuser";
-    static uploadKey = "/auth/upload-key";
+    static serviceExt = Routes.resourceExt + "/service";
+    static bookingExt = Routes.resourceExt + "/booking";
+
+    static authExt = "/auth";
+    static login = Routes.authExt + "/authenticate";
+    static loginWithAccount = Routes.authExt + "/authenticate?returnAccount=true";
+    static register = Routes.authExt + "/register";
+    static tokenUser = Routes.authExt + "/tokenuser";
+    static uploadKey = Routes.authExt + "/upload-key";
+
+    static imageExt = "/image/service";
 
     static getAddress() {
         let href = window.location.origin;

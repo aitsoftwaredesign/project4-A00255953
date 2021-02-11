@@ -24,6 +24,10 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * This is the authentication resource for carrying out login / registering functions.
+ * @author Nicholas Murray
+ */
 @RestController
 public class AuthenticationResource {
 
@@ -32,9 +36,6 @@ public class AuthenticationResource {
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
-
-    @Autowired
-    private ImageUploadKeyUtil uploadKeyUtil;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -74,22 +75,7 @@ public class AuthenticationResource {
         return ResponseEntity.ok(user);
     }
 
-    @GetMapping("/upload-key")
-    public ResponseEntity<?> getImageUploadKey(@RequestHeader("Authorization") String token ) {
-        token = token.split(" ")[1];
-        String username = jwtTokenUtil.getUsernameFromToken(token);
-        List<Object> user = userDetailsService.loadUserAccount(username);
-
-        try {
-            Partner partner = (Partner) user.get(1);
-            return ResponseEntity.ok(uploadKeyUtil.getUploadValues());
-        } catch (Exception e){
-            logger.warn("Invalid account type: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-    }
-
-        private void authenticate(String username, String password) throws Exception {
+    private void authenticate(String username, String password) throws Exception {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         } catch (DisabledException e) {

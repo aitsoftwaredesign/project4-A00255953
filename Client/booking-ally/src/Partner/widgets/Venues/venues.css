@@ -10,6 +10,25 @@
 .partner-venue {
     margin: 0 1% 5% 20%;
     background-color: var(--magnolia);
+    transition: width 2s;
+}
+
+.selected-venue {
+    margin: 0 1% 5% 10% !important;
+    padding: 0;
+    width: 130%;
+    border-radius: 10px;
+}
+
+.selected-venue-card {
+    width: 61.5%;
+    padding: 0;
+}
+
+.selected-venue-image {
+    width: 100%;
+    padding: 0;
+    height: 500px;
 }
 
 .venue-name {
@@ -18,4 +37,9 @@
 
 .desc {
     text-overflow: ellipsis;
+}
+
+.venue-image {
+    width: 100%;
+    height: 500px;
 }

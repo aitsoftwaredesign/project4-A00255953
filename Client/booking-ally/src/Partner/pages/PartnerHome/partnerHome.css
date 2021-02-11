@@ -25,3 +25,16 @@ h3 {
     margin: 17px 0px 0px 10px;
     width: 500px!important;
 }
+
+.home-menu {
+    height: 120%;
+    width: 60%;
+    margin: -5vh -30% -10% 50%;
+    padding-top: 5vh;
+    background-color: var(--magnolia-alpha50);
+    right: 100%
+}
+
+.partner-options {
+    position: fixed;
+}

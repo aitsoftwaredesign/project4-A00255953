@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import S3FileUpload from 'react-s3';
 import RestClient from "../rest/RestClient";
 
 class Uploadimage extends Component {
@@ -12,38 +11,28 @@ class Uploadimage extends Component {
             accessKeyId: "",
             secretAccessKey: ""
         },
-        image: this.props.initialImage ? this.props.initialImage : ""
+        image: this.props.initialImage ? this.props.initialImage : "",
+        isLoading: false
     }
-    async componentDidMount() {
+
+    upload= async (e) => {
+        e.preventDefault();
+        this.setState({
+            isLoading: true
+        });
         let restClient = new RestClient();
-        let response = await restClient.getUploadDetails();
-        if(response != null) {
+        let response = await restClient.uploadImage(e.target.files[0] );
+        if(response.imageUrl) {
+            this.props.setImage(response.imageUrl);
             this.setState({
-                config: {
-                    bucketName: response.bucket,
-                    dirName: "venues/"+ this.props.partner,
-                    region: 'us-east-1',
-                    accessKeyId: response.key,
-                    secretAccessKey: response.secret
-                }
+                image: response.imageUrl
             });
+        } else {
+            alert(response);
         }
-    }
-
-    upload=(e)=>{
-        S3FileUpload.uploadFile(e.target.files[0], this.state.config)
-            .then((data)=> {
-                this.setState({
-                    image: data.location
-                });
-                this.props.setImage(data.location);
-
-            })
-            .catch((error)=> {
-                alert(error)
-            })
-
-
+        this.setState({
+            isLoading: false
+        });
     }
 
     imagePreview = () => {
@@ -55,11 +44,22 @@ class Uploadimage extends Component {
         )
     }
 
+    loading = () => {
+        if(this.state.isLoading) {
+            return (
+                <i className=" w3-spin fas fa-spinner" style={{color: "#0e770e", fontSize: "30px"}}/>
+            )
+        } else {
+            <div></div>
+        }
+    }
+
     render(){
         let image = this.imagePreview();
+        let loading = this.loading();
         return(
             <div className="input">
-                <input type="file" accept="image/png,image/jpeg" onChange={this.upload}/>
+                <input type="file" accept="image/png,image/jpeg" onChange={this.upload}/> {loading}
                 {image}
             </div>
         )

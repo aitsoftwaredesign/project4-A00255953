@@ -1,0 +1,31 @@
+@import url("../../../root.css");
+
+.service-input {
+    margin: 17px 0px 0px 10px;
+    width: 500px!important;
+}
+
+.service-time-input {
+    margin: 17px 400px 0px 10px;
+    width: 100px!important;
+
+}
+
+.service-button-container {
+    width: 100%;
+    margin-top: 40vh;
+    margin-bottom: 0px;
+}
+
+.service-time-picker {
+    width: 100%;
+    padding: 10px 0 0 0;
+    font-size: 20px;
+}
+
+.service-edit-create {
+    font-size: 40px;
+    white-space: nowrap;
+    color: var(--grey-dark);
+    padding-left: 30px;
+}
