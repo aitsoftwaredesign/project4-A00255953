@@ -56,7 +56,6 @@ public class UserDetailsService implements org.springframework.security.core.use
                 Partner storedPartner = getPartnerByName(username).get();
                 userDetails = new User(storedPartner.getUsername(), storedPartner.getPassword(), new ArrayList<>());
             } catch (NoSuchElementException e) {
-                logger.warn("No Partner found with username:" + username);
                 throw new UsernameNotFoundException("No user found with username: " + username);
             }
         }

@@ -1,4 +1,4 @@
-# This workflow builds the Java project and React project in seperate jobs then builds and pushes
+# This workflow builds the Java project and React project in separate jobs then builds and pushes
 # the docker images for each of the Java services, React client and the Proxy service
 name: Integration and Delivery
 

@@ -1,21 +1,25 @@
 package com.bookingally.service.common.util;
 
-import com.bookingally.service.common.pojo.UploadResponse;
+import com.bookingally.service.common.pojo.BucketVariables;
 import java.io.Serializable;
 import org.springframework.stereotype.Component;
 
+/**
+ * This is a utility for retrieving the image bucket properties.
+ * @author Nicholas Murray
+ */
 @Component
 public class ImageUploadKeyUtil implements Serializable {
 
     /**
-     * Retrieves the variables needed to create an {@link UploadResponse} needed to upload
+     * Retrieves the variables needed to create an {@link BucketVariables} needed to upload
      * images to the aws storage bucket.
-     * @return {@link UploadResponse}
+     * @return {@link BucketVariables}
      */
-    public UploadResponse getUploadValues() {
-        String bucket = VariableRetriever.getVariable("BUCKET_NAME", "bucket-name");
+    public BucketVariables getUploadValues() {
+        String bucket = VariableRetriever.getVariable("BUCKET_NAME", "booking-ally-images");
         String key = VariableRetriever.getVariable("ACCESS_KEY", "access-key");
         String secret = VariableRetriever.getVariable("SECRET_ACCESS_KEY", "secret");
-        return new UploadResponse(bucket, key, secret);
+        return new BucketVariables(bucket, key, secret);
     }
 }

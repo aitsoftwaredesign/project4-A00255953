@@ -12,17 +12,17 @@ public class BusinessDay {
 
     /**
      * The opening and closing time for the business on the given day of the week in 24hr format.
-     * Format: (Opening time):(Closing time) HH_MM:HH_MM eg... 09_30:17_30
+     * Format: (Opening time):(Closing time) HH_MM:HH_MM eg... 09:30_17:30
      * Default value is "00_00:00_00" this will indicate the business is not open this day.
      */
-    private String businessHours = "00_00:00_00";
+    private String businessHours = "00:00_00:00";
 
     /**
      * The optional break/lunch times for the business given in 24hr format.
-     * Format: (Opening time):(Closing time) HH_MM:HH_MM eg... 12_30:13_30
+     * Format: (Opening time):(Closing time) HH_MM:HH_MM eg... 12:30_13:30
      * Default value is "00_00:00_00" this will indicate the business does not close for a break.
      */
-    private String breakTime = "00_00:00_00";
+    private String breakTime = "00:00_00:00";
 
     public BusinessDay() {}
 

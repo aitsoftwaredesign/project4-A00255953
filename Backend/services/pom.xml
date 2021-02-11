@@ -12,5 +12,6 @@
         <module>common</module>
         <module>authentication</module>
         <module>venue</module>
+        <module>images</module>
     </modules>
 </project>

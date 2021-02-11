@@ -1,20 +1,14 @@
 import React, {Component} from 'react';
-import "./venues.css"
-import EditVenueModal from "../EditVenue/EditVenueModal";
+import "./venues.css";
 import {connect} from "react-redux";
+import Services from "../Services/Services";
 
 class Venues extends Component {
 
     state = {
         modalIsOpen: false,
-        selectedVenue: null
-    }
-
-    editVenue = (venue) => {
-        this.setState({
-            modalIsOpen: true,
-            selectedVenue: venue
-        })
+        services: null,
+        selectedService: null
     }
 
     setIsOpen = (open) => {
@@ -23,20 +17,38 @@ class Venues extends Component {
         })
     }
 
+    selectVenue = async (venue) => {
+        this.props.selectVenue(venue);
+    }
+
     createVenueList = () => {
         let venueList;
         if (this.props.partnerVenues && this.props.partnerVenues.length) {
             venueList = this.props.partnerVenues.map(venue => {
                 return (
-                    <div className="w3-card-4 w3-round w3-center w3-hover-blue w3-mobile partner-venue" key={venue.id}
-                         onClick={() => {this.editVenue(venue)
-                         }}>
-                        <img className="w3-round" alt="Venue Profile" src={venue.image} style={{width: "100%"}}/>
-                        <div className="w3-container w3-center">
-                            <h2 className="venue-name">{venue.name}</h2>
-                            <p className="desc">{venue.description}</p>
+                    (venue === this.props.selectedVenue) ?
+                        <div className="w3-container partner-venue selected-venue">
+                            <div className="w3-container w3-cell w3-card-4 w3-round selected-venue-card" key={venue.id} onClick={async () => {await this.selectVenue(venue)}}>
+                                <img className="w3-round w3-greyscale-max selected-venue-image" alt="Venue Profile" src={venue.image}/>
+                                <div className="w3-container w3-center">
+                                    <h2 className="venue-name">{venue.name}</h2>
+                                    <p className="desc">{venue.description}</p>
+                                </div>
+                            </div>
+                            <div className="w3-container w3-cell">
+                                <Services venue={venue}/>
+                            </div>
                         </div>
-                    </div>
+                        :
+                        <div className="w3-card-4 w3-round w3-center w3-hover-blue w3-mobile partner-venue" key={venue.id}
+                             onClick={async () => { await this.selectVenue(venue)
+                             }}>
+                            <img className="w3-round w3-hover-grayscale" alt="Venue Profile" src={venue.image} style={{width: "100%", height:"500px"}}/>
+                            <div className="w3-container w3-center">
+                                <h2 className="venue-name">{venue.name}</h2>
+                                <p className="desc">{venue.description}</p>
+                            </div>
+                        </div>
                 )
             });
         } else {
@@ -56,8 +68,6 @@ class Venues extends Component {
         return (
             <div className="venues">
                 {venueList}
-                <EditVenueModal modalIsOpen={this.state.modalIsOpen} setIsOpen={this.setIsOpen}
-                                venue={this.state.selectedVenue} updateVenues/>
             </div>
         )
     }
@@ -65,8 +75,15 @@ class Venues extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        partnerVenues: state.partnerVenues
+        partnerVenues: state.partnerVenues,
+        services: state.services
     }
 }
 
-export default connect(mapStateToProps) (Venues);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setServices: (services) => { dispatch({ type:'SET_SERVICES', services:services})}
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (Venues);

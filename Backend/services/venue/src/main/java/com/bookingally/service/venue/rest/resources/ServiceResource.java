@@ -70,7 +70,7 @@ public class ServiceResource {
      */
     @PostMapping()
     public ResponseEntity<?> saveService(@RequestBody Service newService) {
-        String valid = validateService(newService);
+        String valid = (newService.getId() == null) ? validateService(newService) : "valid";
         if(valid.equals("valid")) {
             final Service service = serviceRepository.save(newService);
             return new ResponseEntity<>(service,HttpStatus.CREATED);

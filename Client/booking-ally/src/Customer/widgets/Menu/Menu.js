@@ -26,7 +26,7 @@ class Menu extends Component {
         return (
             <div className="w3-dropdown-hover w3-text-white w3-round-large" style={{backgroundColor:'transparent'}}>
                 {user}
-                <div id="content" className="customer-menu w3-dropdown-content w3-card-4 w3-round w3-bar-block w3-border">
+                <div id="content" className="customer-menu w3-animate-opacity w3-dropdown-content w3-card-4 w3-round w3-bar-block w3-border">
                     <a className="w3-bar-item w3-animate-right">{user}</a>
                     <div className="hl"></div>
                     <a className="w3-margin-right w3-round w3-hover-blue w3-animate-right "><Logout logout={this.props.logout}/></a>

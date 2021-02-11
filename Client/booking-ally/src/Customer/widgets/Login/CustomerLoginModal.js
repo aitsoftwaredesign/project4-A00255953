@@ -30,7 +30,7 @@ export default function CustomerLoginModal({loggedin}){
 
     return (
         loggedin ?
-            <div className="w3-container w3-cell output w3-right">
+            <div className="w3-container output w3-right">
                 <Menu/>
             </div>
             :

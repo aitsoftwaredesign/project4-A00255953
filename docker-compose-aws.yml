@@ -3,7 +3,7 @@ version: "3.7"
 # container service. Docker needs to be in the aws context for this to work.
 services:
   nginx:
-    container_name: proxy
+    container_name: proxy-service
     image: nicholasmurray/proxy-service
     ports:
       - 80:80
@@ -29,6 +29,8 @@ services:
   venueservice:
     container_name: venue-service
     image: nicholasmurray/venue-service
+    deploy:
+      replicas: 2
     environment:
       MONGODB_URI:
       JWT_SECRET:

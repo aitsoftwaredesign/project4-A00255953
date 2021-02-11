@@ -1,9 +1,10 @@
 .customer-menu {
-    background-color: white;
+    background-color: var(--magnolia);
     right:-125%;
-    top:-10px;
+    top:-60px;
+    padding-top: 50px;
     width:250px;
-    height:220px;
+    height:100vh;
 }
 
 .hl {

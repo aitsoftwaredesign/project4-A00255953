@@ -3,10 +3,51 @@
 .create {
     font-size: 50px;
     white-space: nowrap;
-    background-color: var(--magnolia);
     color: var(--grey-dark);
 }
 
 .fa-plus-square {
     color: #0e770e;
+}
+
+.buttons {
+    border-radius: 5px;
+    border-color: gray;
+    border-width: 1px;
+}
+
+.button-container {
+    width: 100%;
+    margin-top: 60vh;
+    margin-bottom: 0px;
+}
+
+.modal {
+    height: 100%;
+}
+
+.venueForm {
+    height: 100%;
+}
+
+.time-picker {
+    width: 40%;
+    padding: 10px 0 0 0;
+    font-size: 20px;
+}
+
+.time-label {
+    margin: 20px 20px 0 0;
+}
+
+.day-header {
+    text-align: left;
+}
+
+.publish {
+    alignment: center;
+}
+
+.w3-cell-row {
+    margin: 5px;
 }

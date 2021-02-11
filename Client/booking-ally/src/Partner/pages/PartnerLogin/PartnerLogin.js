@@ -283,7 +283,7 @@ class PartnerLogin extends Component {
                                     </button>
                                 </div>
                                 <div className="buttons w3-center">
-                                    <a href="" className="w3-text-black" onClick={this.setRegister}>
+                                    <a href="" className="w3-text-blue" onClick={this.setRegister}>
                                         Not a User? Sign up..
                                     </a>
                                 </div>

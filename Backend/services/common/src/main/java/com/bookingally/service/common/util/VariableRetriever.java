@@ -1,5 +1,9 @@
 package com.bookingally.service.common.util;
 
+/**
+ * This is a utility for retrieving environmental and system properties, giving precedence to system properties.
+ * @author Nicholas Murray
+ */
 public class VariableRetriever {
 
     /**

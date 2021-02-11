@@ -1,0 +1,27 @@
+@import url("../../../root.css");
+
+.services {
+    margin: 20px;
+    width: 100%;
+}
+
+.service {
+    border-radius: 4px;
+    font-size: 20px;
+    margin-right: 20px;
+}
+
+.service-options {
+    width: 400px;
+}
+
+.service-text {
+    width: 65%;
+    text-align: left;
+    color: var(--grey-dark);
+}
+
+.service-cost {
+    white-space: nowrap;
+    color: var(--grey-dark);
+}
