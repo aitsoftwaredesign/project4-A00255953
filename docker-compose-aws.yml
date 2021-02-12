@@ -11,6 +11,7 @@ services:
       - webclient
       - authservice
       - venueservice
+      - imageservice
 
   webclient:
     container_name: webclient
@@ -35,5 +36,13 @@ services:
       MONGODB_URI:
       JWT_SECRET:
 
-
+  imageservice:
+    container_name: image-service
+    image: nicholasmurray/image-service
+    environment:
+      MONGODB_URI:
+      JWT_SECRET:
+      BUCKET_NAME:
+      ACCESS_KEY:
+      SECRET_ACCESS_KEY:
 
