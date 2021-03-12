@@ -1,3 +1,5 @@
+@import "../../../root.css";
+
 .customer-menu {
     background-color: var(--magnolia);
     right:-125%;
@@ -5,6 +7,14 @@
     padding-top: 50px;
     width:250px;
     height:100vh;
+}
+
+.customer-menu-dropdown {
+    color: var(--grey-dark);
+}
+
+.customer-menu-link {
+    text-decoration: none;
 }
 
 .hl {

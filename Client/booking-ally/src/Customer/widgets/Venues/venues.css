@@ -6,9 +6,6 @@
     margin-top: 50px;
 }
 
-p {
-    font-size: 20px;
-}
 .icon {
     color: var(--prussian-blue);
     font-size: 175px;
@@ -40,6 +37,17 @@ p {
 .venue-card-bottom {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+    height: 10vh;
+}
+
+.venue-card-desc {
+    margin-top: -10px;
+    width: 100%;
+    white-space:  nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 20px;
+    text-decoration: none !important;
 }
 
 .venues {

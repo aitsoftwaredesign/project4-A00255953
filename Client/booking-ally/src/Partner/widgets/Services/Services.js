@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
+import { Link } from 'react-router-dom';
 import './services.css';
 import CreateServiceModal from "../CreateService/CreateServiceModal";
 import EditServiceModal from "../EditService/EditServiceModal";
@@ -32,7 +33,7 @@ class Services extends Component {
             });
         } else {
             servicesList = (
-                <div>
+                <div className="services-no-services">
                     <h2>No Services for this venue</h2>
                 </div>
             )
@@ -44,7 +45,7 @@ class Services extends Component {
     getOption() {
         if(!this.props.selectedService){
             return (
-                <CreateServiceModal venue={this.props.venue}/>
+                <CreateServiceModal venue={this.props.selectedVenue}/>
             )
         } else {
             return (
@@ -55,12 +56,17 @@ class Services extends Component {
 
     render() {
         let serviceList = this.renderServices();
-        let options = this.getOption();
+        let options = this.props.options === true ? this.getOption() : null ;
         return (
             <div className="services">
                 {serviceList}
                 <div className="service-options">
                     {options}
+                </div>
+                <div className="service-edit-create w3-sans-serif w3-container w3-cell w3-hover-blue w3-round">
+                    <Link to={"/partner/" + this.props.selectedVenue.id} style={{ textDecoration: 'none' }}>
+                        View Bookings  <i className="fas fa-calendar-week service-options-calendar"/>
+                    </Link>
                 </div>
             </div>
         )
@@ -71,7 +77,8 @@ class Services extends Component {
 const mapStateToProps = (state) => {
     return {
         services: state.services,
-        selectedService: state.selectedService
+        selectedService: state.selectedService,
+        selectedVenue: state.selectedVenue
     }
 }
 

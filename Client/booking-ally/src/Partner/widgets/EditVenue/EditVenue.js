@@ -15,7 +15,7 @@ class EditVenue extends Component {
     restClient = new RestClient();
 
     onChange= (e) => {
-        let venue = this.state.venue;
+        let venue = this.props.selectedVenue;
         venue[e.target.id] = e.target.value;
         this.setState({
             venue: venue
@@ -24,15 +24,15 @@ class EditVenue extends Component {
 
     onChangeTime = (e) => {
         let day = e.target.id.split(".");
-        let currentHours = this.state.venue.businessWeek[day[0]].businessHours.split("_");
+        let currentHours = this.props.selectedVenue.businessWeek[day[0]].businessHours.split("_");
 
         if(day[1] === "open") {
-            currentHours[0] = e.target.value;
+            currentHours[0] = this.getRoundedTime(e.target.value.split(':'));
         } else if(day[1] === "close") {
-            currentHours[1] = e.target.value;
+            currentHours[1] = this.getRoundedTime(e.target.value.split(':'));
         }
 
-        let updatedVenue = this.state.venue;
+        let updatedVenue = this.props.selectedVenue;
         updatedVenue.businessWeek[day[0]].businessHours = currentHours[0] + "_" + currentHours[1];
 
         this.setState({
@@ -40,8 +40,19 @@ class EditVenue extends Component {
         });
     }
 
+    getRoundedTime = (time) => {
+        let minutes = parseInt(time[1]);
+        if(minutes % 5 > 0) {
+            minutes += (minutes % 5 > 2) ? (5 -(minutes % 5)) : -(minutes % 5);
+            time[1] = minutes;
+        }
+
+        let timeString = time[0] + ':' + time[1];
+        return timeString;
+    }
+
     setImageUrl = (url) => {
-        let venue = this.state.venue;
+        let venue = this.props.selectedVenue;
         let previousImage = venue.image;
         venue.image = url;
         this.setState({
@@ -52,7 +63,7 @@ class EditVenue extends Component {
 
     publishVenue = async (e) => {
         e.preventDefault();
-        let update = this.state.venue;
+        let update = this.props.selectedVenue;
         update.active = true;
         this.setState({
             venue: update
@@ -63,7 +74,7 @@ class EditVenue extends Component {
     updateVenue = async (e) => {
         e.preventDefault();
         let restClient = new RestClient();
-        let response = await restClient.createVenue(this.state.venue);
+        let response = await restClient.createVenue(this.props.selectedVenue);
         if(response.name) {
             alert("Venue Updated");
             if(this.state.previousImage !== null) await restClient.deleteImage(this.state.previousImage);
@@ -81,7 +92,7 @@ class EditVenue extends Component {
             )
         });
 
-        let selected = this.state.venue.venueType;
+        let selected = this.props.selectedVenue.venueType;
         return (
             <select className="input"  id="venueType" defaultValue={selected} onChange={this.onChange}>
                 {options}
@@ -107,7 +118,7 @@ class EditVenue extends Component {
         }
 
         if(e.target.checked) {
-            let updatedVenue = this.state.venue;
+            let updatedVenue = this.props.selectedVenue;
             updatedVenue.businessWeek[element].businessHours = "00:00_00:00";
 
             this.setState({
@@ -136,7 +147,7 @@ class EditVenue extends Component {
                                 className="time"
                                 type="time"
                                 id="monday.open"
-                                value={this.state.venue.businessWeek.monday.businessHours.split('_')[0].toString()}
+                                value={this.props.selectedVenue.businessWeek.monday.businessHours.split('_')[0].toString()}
                                 onChange={this.onChangeTime}
                             />
                         </div>
@@ -146,7 +157,7 @@ class EditVenue extends Component {
                                 className="time"
                                 type="time"
                                 id="monday.close"
-                                value={this.state.venue.businessWeek.monday.businessHours.split('_')[1].toString()}
+                                value={this.props.selectedVenue.businessWeek.monday.businessHours.split('_')[1].toString()}
                                 onChange={this.onChangeTime}
                             />
                         </div>
@@ -170,7 +181,7 @@ class EditVenue extends Component {
                                 className="time"
                                 type="time"
                                 id="tuesday.open"
-                                value={this.state.venue.businessWeek.tuesday.businessHours.split('_')[0].toString()}
+                                value={this.props.selectedVenue.businessWeek.tuesday.businessHours.split('_')[0].toString()}
                                 onChange={this.onChangeTime}
                             />
                         </div>
@@ -180,7 +191,7 @@ class EditVenue extends Component {
                                 className="time"
                                 type="time"
                                 id="tuesday.close"
-                                value={this.state.venue.businessWeek.tuesday.businessHours.split('_')[1].toString()}
+                                value={this.props.selectedVenue.businessWeek.tuesday.businessHours.split('_')[1].toString()}
                                 onChange={this.onChangeTime}
                             />
                         </div>
@@ -204,7 +215,7 @@ class EditVenue extends Component {
                                 className="time"
                                 type="time"
                                 id="wednesday.open"
-                                value={this.state.venue.businessWeek.wednesday.businessHours.split('_')[0].toString()}
+                                value={this.props.selectedVenue.businessWeek.wednesday.businessHours.split('_')[0].toString()}
                                 onChange={this.onChangeTime}
                             />
                         </div>
@@ -214,7 +225,7 @@ class EditVenue extends Component {
                                 className="time"
                                 type="time"
                                 id="wednesday.close"
-                                value={this.state.venue.businessWeek.wednesday.businessHours.split('_')[1].toString()}
+                                value={this.props.selectedVenue.businessWeek.wednesday.businessHours.split('_')[1].toString()}
                                 onChange={this.onChangeTime}
                             />
                         </div>
@@ -238,7 +249,7 @@ class EditVenue extends Component {
                                 className="time"
                                 type="time"
                                 id="thursday.open"
-                                value={this.state.venue.businessWeek.thursday.businessHours.split('_')[0].toString()}
+                                value={this.props.selectedVenue.businessWeek.thursday.businessHours.split('_')[0].toString()}
                                 onChange={this.onChangeTime}
                             />
                         </div>
@@ -248,7 +259,7 @@ class EditVenue extends Component {
                                 className="time"
                                 type="time"
                                 id="thursday.close"
-                                value={this.state.venue.businessWeek.thursday.businessHours.split('_')[1].toString()}
+                                value={this.props.selectedVenue.businessWeek.thursday.businessHours.split('_')[1].toString()}
                                 onChange={this.onChangeTime}
                             />
                         </div>
@@ -272,7 +283,7 @@ class EditVenue extends Component {
                                 className="time"
                                 type="time"
                                 id="friday.open"
-                                value={this.state.venue.businessWeek.friday.businessHours.split('_')[0].toString()}
+                                value={this.props.selectedVenue.businessWeek.friday.businessHours.split('_')[0].toString()}
                                 onChange={this.onChangeTime}
                             />
                         </div>
@@ -282,7 +293,7 @@ class EditVenue extends Component {
                                 className="time"
                                 type="time"
                                 id="friday.close"
-                                value={this.state.venue.businessWeek.friday.businessHours.split('_')[1].toString()}
+                                value={this.props.selectedVenue.businessWeek.friday.businessHours.split('_')[1].toString()}
                                 onChange={this.onChangeTime}
                             />
                         </div>
@@ -306,7 +317,7 @@ class EditVenue extends Component {
                                 className="time"
                                 type="time"
                                 id="saturday.open"
-                                value={this.state.venue.businessWeek.saturday.businessHours.split('_')[0].toString()}
+                                value={this.props.selectedVenue.businessWeek.saturday.businessHours.split('_')[0].toString()}
                                 onChange={this.onChangeTime}
                             />
                         </div>
@@ -316,7 +327,7 @@ class EditVenue extends Component {
                                 className="time"
                                 type="time"
                                 id="saturday.close"
-                                value={this.state.venue.businessWeek.saturday.businessHours.split('_')[1].toString()}
+                                value={this.props.selectedVenue.businessWeek.saturday.businessHours.split('_')[1].toString()}
                                 onChange={this.onChangeTime}
                             />
                         </div>
@@ -340,7 +351,7 @@ class EditVenue extends Component {
                                 className="time"
                                 type="time"
                                 id="sunday.open"
-                                value={this.state.venue.businessWeek.sunday.businessHours.split('_')[0].toString()}
+                                value={this.props.selectedVenue.businessWeek.sunday.businessHours.split('_')[0].toString()}
                                 onChange={this.onChangeTime}
                             />
                         </div>
@@ -350,7 +361,7 @@ class EditVenue extends Component {
                                 className="time"
                                 type="time"
                                 id="sunday.close"
-                                value={this.state.venue.businessWeek.sunday.businessHours.split('_')[1].toString()}
+                                value={this.props.selectedVenue.businessWeek.sunday.businessHours.split('_')[1].toString()}
                                 onChange={this.onChangeTime}
                             />
                         </div>
@@ -408,7 +419,7 @@ class EditVenue extends Component {
                                     type="text"
                                     id="name"
                                     onChange={this.onChange}
-                                    value={this.state.venue.name}
+                                    value={this.props.selectedVenue.name}
                                 />
                             </div>
                         </div>
@@ -425,7 +436,7 @@ class EditVenue extends Component {
                                 <h3 htmlFor="image">Image:</h3>
                             </div>
                             <div className="w3-container w3-cell">
-                                <Uploadimage setImage={this.setImageUrl} initialImage={this.state.venue.image}  partner={this.props.user.id}/>
+                                <Uploadimage setImage={this.setImageUrl} initialImage={this.props.selectedVenue.image}  partner={this.props.user.id}/>
                             </div>
                         </div>
                         <div className="w3-container w3-right">
@@ -439,7 +450,7 @@ class EditVenue extends Component {
                                     id="description"
                                     style={{height:"100px"}}
                                     onChange={this.onChange}
-                                    value={this.state.venue.description}
+                                    value={this.props.selectedVenue.description}
                                 />
                             </div>
                         </div>
@@ -453,7 +464,7 @@ class EditVenue extends Component {
                                     type="text"
                                     id="address1"
                                     onChange={this.onChange}
-                                    value={this.state.venue.address1}
+                                    value={this.props.selectedVenue.address1}
                                 />
                             </div>
                         </div>
@@ -467,7 +478,7 @@ class EditVenue extends Component {
                                     type="text"
                                     id="address2"
                                     onChange={this.onChange}
-                                    value={this.state.venue.address2}
+                                    value={this.props.selectedVenue.address2}
                                 />
                             </div>
                         </div>
@@ -481,7 +492,7 @@ class EditVenue extends Component {
                                     type="text"
                                     id="town"
                                     onChange={this.onChange}
-                                    value={this.state.venue.town}
+                                    value={this.props.selectedVenue.town}
                                 />
                             </div>
                         </div>
@@ -495,7 +506,7 @@ class EditVenue extends Component {
                                     type="text"
                                     id="postcode"
                                     onChange={this.onChange}
-                                    value={this.state.venue.postalCode}
+                                    value={this.props.selectedVenue.postalCode}
                                 />
                             </div>
                         </div>
@@ -533,7 +544,8 @@ class EditVenue extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        user: state.user
+        user: state.user,
+        selectedVenue: state.selectedVenue
     }
 }
 

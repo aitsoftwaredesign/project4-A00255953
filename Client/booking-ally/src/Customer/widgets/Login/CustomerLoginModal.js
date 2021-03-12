@@ -3,10 +3,11 @@ import Modal from "react-modal";
 import CustomerLogin from "./CustomerLogin";
 import './customerLogin.css';
 import Menu from "../Menu/Menu";
+import {connect} from "react-redux";
 
 Modal.setAppElement(document.getElementById('root'));
 
-export default function CustomerLoginModal({loggedin}){
+function CustomerLoginModal({loggedin, setOpenLogin}){
     const [modalIsOpen,setIsOpen] = React.useState(false);
 
     let customStyles = {
@@ -25,8 +26,11 @@ export default function CustomerLoginModal({loggedin}){
     }
 
     function openModal() {
-        setIsOpen(true);;
+        setIsOpen(true);
     }
+
+    setOpenLogin(openModal);
+
 
     return (
         loggedin ?
@@ -35,7 +39,7 @@ export default function CustomerLoginModal({loggedin}){
             </div>
             :
             <div>
-                <a className="w3-container w3-cell output w3-right w3-hover-white w3-round-large" onClick={openModal}>
+                <a className="w3-container w3-cell output w3-right" onClick={openModal}>
                     Login
                 </a>
                 <Modal
@@ -48,3 +52,15 @@ export default function CustomerLoginModal({loggedin}){
             </div>
     )
 }
+
+const mapStateToProps = (state) => {
+    return {
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setOpenLogin: (openLogin) => { dispatch({ type:'SET_OPEN_LOGIN', login:openLogin})}
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(CustomerLoginModal);

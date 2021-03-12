@@ -19,13 +19,21 @@ class Routes {
 
     static getAddress() {
         let href = window.location.origin;
+        let port = Routes.getServerPort();
         if((href.match(/:/g) || []).length === 1) {
-            Routes.serverAddress = href.substr(0, href.length).concat(":", process.env.REACT_APP_SERVER_PORT, "/api");
+            Routes.serverAddress = href.substr(0, href.length).concat(":", port, "/api");
         } else {
-            Routes.serverAddress = href.slice(0, href.lastIndexOf(":")).concat(":", process.env.REACT_APP_SERVER_PORT, "/api");
+            Routes.serverAddress = href.slice(0, href.lastIndexOf(":")).concat(":", port, "/api");
         }
 
         return Routes.serverAddress;
+    }
+
+    static getServerPort() {
+        return window.location.hostname === "localhost" ?
+            process.env.REACT_APP_DEVELOPMENT_SERVER_PORT
+            :
+            process.env.REACT_APP_SERVER_PORT;
     }
 }
 

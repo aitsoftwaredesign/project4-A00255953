@@ -2,7 +2,7 @@ version: "3.7"
 # Development compose file, for use during development of the Web client to allow hot
 # reload of the react site on port 80 without the container
 services:
-  nginx:
+  proxyservice:
     container_name: proxy-service
     build: Proxy/dev
     ports:

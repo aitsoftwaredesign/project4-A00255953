@@ -2,27 +2,15 @@ import React, { Component} from 'react';
 import Venues from '../../widgets/Venues/Venues';
 import RestClient from "../../../utilities/rest/RestClient";
 import { connect } from 'react-redux';
-import NavBar from "../../widgets/NavBar/NavBar";
-import styles from "./home.css"
-
+import HomePageHeader from "../../widgets/HomePageHeader/HomePageHeader";
 
 class Home extends Component {
-    state = {
-        isLoading: false,
-    };
 
     async componentDidMount() {
-        this.setState({
-            isLoading: true
-        });
-
         try {
             let restClient = new RestClient();
             let venues = await restClient.getVenues();
             this.props.setVenues(venues);
-            this.setState({
-                isLoading: false
-            });
         } catch (e) {
             console.log("Could not contact venue resource: " + e.toString());
         }
@@ -32,8 +20,8 @@ class Home extends Component {
     render() {
         return (
             <div className="center">
-                <NavBar/>
-                <Venues venues={this.props.venues}/>
+                <HomePageHeader/>
+                <Venues/>
             </div>
         )
     }

@@ -1,5 +1,6 @@
 package com.bookingally.service.venue.rest.resources;
 
+import com.bookingally.service.common.database.models.Account;
 import com.bookingally.service.common.database.models.Customer;
 import com.bookingally.service.common.rest.security.UserDetailsService;
 import com.bookingally.service.venue.database.models.Booking;
@@ -8,17 +9,21 @@ import com.bookingally.service.venue.database.models.Venue;
 import com.bookingally.service.venue.database.repositories.BookingRepository;
 import com.bookingally.service.venue.database.repositories.ServiceRepository;
 import com.bookingally.service.venue.database.repositories.VenueRepository;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -49,10 +54,26 @@ public class BookingResource {
      * @return {@link ResponseEntity<Booking>} response containing the Booking in the body.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Booking> getBooking(@PathVariable String id ) {
+    public ResponseEntity<?> getBooking(@PathVariable String id, @RequestParam(defaultValue = "false") boolean returnUser ) {
         Optional<Booking> booking = bookingRepository.findById(id);
+
+        if(returnUser) {
+            if(booking.isPresent()) {
+                Booking actualBooking = booking.get();
+                try {
+                    UserDetails user = userDetailsService.loadUserById(actualBooking.getCustomerId());
+                    Account userAccount = (Account) userDetailsService.loadUserAccount(user.getUsername()).get(1);
+                    String userName = userAccount.getFirstname() + " " + userAccount.getLastname();
+                    List<Object> responseEntity = Arrays.asList(userName, actualBooking);
+                    return new ResponseEntity<>(responseEntity, HttpStatus.OK);
+                } catch (UsernameNotFoundException e) {
+                    return new ResponseEntity<>(actualBooking, HttpStatus.OK);
+                }
+            }
+        }
+
         return booking.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     /**

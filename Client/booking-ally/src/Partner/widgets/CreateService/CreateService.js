@@ -17,6 +17,23 @@ class CreateService extends Component {
         });
     }
 
+    onChangeTime = (e) => {
+        e.preventDefault();
+
+        let time = e.target.value.split(':');
+        let minutes = parseInt(time[1]);
+        if(minutes % 5 > 0) {
+            minutes += (minutes % 5 > 2) ? (5 -(minutes % 5)) : -(minutes % 5);
+            time[1] = minutes;
+        }
+
+        let timeString = time[0] + ':' + time[1];
+
+        this.setState({
+            length: timeString
+        });
+    }
+
     createService = async (e) => {
         e.preventDefault();
         const newService = {
@@ -100,9 +117,10 @@ class CreateService extends Component {
                                 className="service-time-input w3-center"
                                 title="How long will the service take? In hours and minutes."
                                 type="time"
+                                step="60"
                                 id="length"
                                 value={this.state.length.toString()}
-                                onChange={this.onChange}
+                                onChange={this.onChangeTime}
                             />
                         </div>
                     </div>

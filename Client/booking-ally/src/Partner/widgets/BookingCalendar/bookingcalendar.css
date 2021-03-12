@@ -1,0 +1,124 @@
+@import url("../../../root.css");
+
+.booking-calendar {
+    height: auto;
+    width: 100%;
+    background-color: var(--magnolia);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.booking-calendar-bookings {
+    width: 100%;
+    padding: 0;
+}
+
+.booking-calendar-column {
+    alignment: center;
+    height: 100%;
+    width:3vw;
+    border-left: 1px solid var(--grey-dark);
+
+}
+
+.booking-calendar-header {
+    alignment: center;
+    text-align: center;
+    font-weight: bold;
+    height: 45px;
+}
+
+.booking-calendar-header-date {
+    padding-top: 0;
+    margin-top: 0;
+    font-weight: 500;
+    border-bottom: 1px solid var(--grey-dark);
+}
+
+.booking-calendar-data {
+    padding: 0 0 2px 0;
+    width: 10.5vw;
+}
+
+.booking-calendar-data-free {
+    padding: 0;
+    background-image: linear-gradient( to right, rgba(1,167,41,0.75), rgba(1,167,41,0.75)),
+    url("../../../Resources/backgrounds/qbkls.png") !important;
+    border-radius: 5px;
+    border: 1px solid green;
+}
+
+.booking-calendar-free:hover{
+    border:1px solid var(--magnolia);
+}
+
+.booking-calendar-data-closed {
+    background-image: linear-gradient( to right, rgba(255, 28, 28, 0.5), rgba(255, 28, 28, 0.5)),
+    url("../../../Resources/backgrounds/memphis-mini.png") !important;
+    border-radius: 5px;
+    border: 1px solid #555555;
+}
+
+.booking-calendar-data-booked {
+    background-image: linear-gradient( to right, var(--grey-dark-alpha75), var(--grey-dark-alpha75)),
+    url("../../../Resources/backgrounds/memphis-mini.png") !important;
+    border-radius: 5px;
+    border: 1px solid #555555 ;
+}
+
+.booking-calendar-data-booked:hover {
+    background-image: linear-gradient( to right, var(--light-blue-alpha75),  var(--light-blue-alpha75)),
+    url("../../../Resources/backgrounds/memphis-mini.png") !important;
+
+    border: 1px solid var(--magnolia);
+}
+
+.booking-calendar-time {
+    font-weight: bold;
+    padding: 0 0 0 15px;
+}
+
+.booking-calendar-time-cell {
+    height: 30px;
+    alignment: center;
+    text-align: center;
+    width: 5vw;
+}
+
+.booking-calendar-time-cell-header {
+    height: 45px;
+    padding-top: 10px;
+    alignment: center;
+    text-align: center;
+    width: 5vw;
+    border-bottom: 1px solid var(--grey-dark);
+}
+
+.booking-calendar-empty-data {
+
+}
+
+.booking-calendar-no-bookings {
+    height: 100%;
+    padding:20% 25% 50% 0;
+}
+
+.booking-calendar-odd-cell {
+    background-color: var(--grey-dark-alpha75);
+}
+
+.booking-calendar-arrow {
+    border-radius: 5px;
+    border: 1px solid var(--grey-dark);
+    width: 50%;
+    height: 40px;
+    margin: 0 5px 0 5px;
+    font-size: 20px;
+    padding: 12.5% 10px 10% 10px;
+    color: var(--grey-dark);
+}
+
+.booking-calendar-arrow:hover {
+    background-color: rgba(1,167,41,0.75);
+    color: var(--magnolia);
+}

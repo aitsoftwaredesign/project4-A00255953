@@ -3,7 +3,7 @@ version: "3.7"
 # current docker context.
 # To deploy system open a terminal in the project directory and run "docker-compose up"
 services:
-  nginx:
+  proxyservice:
     container_name: proxy-service
     build: ./Proxy/dev
     ports:
@@ -15,7 +15,7 @@ services:
       - imageservice
 
   webclient:
-    container_name: webclient
+    container_name: web-client
     build:
       context: ./Client/booking-ally
       dockerfile: ./production/Dockerfile

@@ -13,30 +13,16 @@ import DeleteVenueModal from "../../widgets/DeleteVenue/DeleteVenueModal";
 class PartnerHome extends Component {
     state = {
         isLoading: false,
-        selectedVenue: null,
         selectedService: null,
         services: null
     };
 
     async componentDidMount() {
-        if(this.props.token !== "" && this.props.user !== {}) {
-            await this.getUser();
-        }
-
         await this.getVenues();
     }
 
-    getUser = async () => {
-        let restClient = new RestClient();
-        let response = await restClient.getUser()
-        if(response) {
-            this.props.setUser(response[1]);
-            this.props.setType(response[0]);
-        }
-    }
-
     selectVenue = async (venue) => {
-        if(venue === this.state.selectedVenue) {
+        if(venue === this.props.selectedVenue) {
             venue = null;
             this.props.setServices(null);
         } else {
@@ -44,20 +30,19 @@ class PartnerHome extends Component {
             let services = await restClient.getServicesByVenueId(venue.id);
             this.props.setServices(services);
         }
-        this.setState({
-            selectedVenue: venue
-        })
+        localStorage.setItem('BASelectedVenue', JSON.stringify(venue));
+        this.props.setVenue(venue);
     }
 
     getOptions = () => {
-        if(this.state.selectedVenue !== null) {
+        if(this.props.selectedVenue) {
             return (
                 <div className="partner-options">
                     <div className="w3-container" style={{width:"100%", height:"50px", margin:"25px"}}>
-                        <EditVenueModal venue={this.state.selectedVenue} refresh={this.getVenues}/>
+                        <EditVenueModal refresh={this.getVenues}/>
                     </div>
                     <div className="w3-container" style={{width:"100%", height:"50px", margin:"25px"}}>
-                        <DeleteVenueModal venue={this.state.selectedVenue} refresh={this.getVenues}/>
+                        <DeleteVenueModal refresh={this.getVenues}/>
                     </div>
                 </div>
             )
@@ -79,41 +64,36 @@ class PartnerHome extends Component {
             this.setState({
                 isLoading: false
             });
+
         } catch (e) {
             console.log("Could not contact venue resource: " + e.toString());
         }
     }
 
     render() {
-        let loggedIn = (this.props.token !== "" && this.props.accountType === AccountTypes.Partner);
         let selectedOptions = this.getOptions();
 
         return (
-            loggedIn ?
-                <div className="center" >
-                    <NavBar/>
-                    <div className="w3-container w3-cell w3-center" style={{width:"50%"}}>
-                        <div className="w3-container" style={{width:"100%"}} >
-                            <Venues updateVenues={this.getVenues} selectVenue={this.selectVenue} selectedVenue={this.state.selectedVenue}/>
-                        </div>
-                    </div>
-                    <div className="w3-container w3-cell" style={{width:"50%", height:"100vh"}}>
-                        <div className="home-menu w3-card-4">
-                            {selectedOptions}
-                        </div>
+            <div className="center" >
+                <NavBar/>
+                <div className="w3-container w3-cell w3-center" style={{width:"50%"}}>
+                    <div className="w3-container" style={{width:"100%"}} >
+                        <Venues updateVenues={this.getVenues} selectVenue={this.selectVenue}/>
                     </div>
                 </div>
-            :
-                <div>
-                    <PartnerLogin/>
+                <div className="w3-container w3-cell" style={{width:"50%", height:"100vh", right:'0'}}>
+                    <div className="home-menu w3-card-4">
+                        {selectedOptions}
+                    </div>
                 </div>
+            </div>
         )
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        venues: state.venues,
+        selectedVenue: state.selectedVenue,
         user: state.user,
         accountType: state.accountType,
         token: state.token,
@@ -126,7 +106,8 @@ const mapDispatchToProps = (dispatch) => {
         setUser: (user) => { dispatch({ type:'SET_USER', user:user })},
         setType: (accountType) => { dispatch({ type:'SET_TYPE', account:accountType })},
         setPartnerVenues: (venues) => { dispatch({ type:'SET_PARTNER_VENUES', partnerVenues:venues})},
-        setServices: (services) => { dispatch({ type:'SET_SERVICES', services:services})}
+        setServices: (services) => { dispatch({ type:'SET_SERVICES', services:services})},
+        setVenue: (venue) => { dispatch({ type:'SELECT_VENUE', venue:venue})}
     }
 }
 

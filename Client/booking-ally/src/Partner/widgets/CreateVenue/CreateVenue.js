@@ -63,9 +63,9 @@ class CreateVenue extends Component {
         let currentHours = this.state.businessWeek[day[0]].businessHours.split("_");
 
         if(day[1] === "open") {
-            currentHours[0] = e.target.value;
+            currentHours[0] = this.getRoundedTime(e.target.value.split(':'));
         } else if(day[1] === "close") {
-            currentHours[1] = e.target.value;
+            currentHours[1] = this.getRoundedTime(e.target.value.split(':'));
         }
 
         let businessWeek = this.state.businessWeek;
@@ -74,6 +74,17 @@ class CreateVenue extends Component {
         this.setState({
             businessWeek: businessWeek
         });
+    }
+
+    getRoundedTime = (time) => {
+        let minutes = parseInt(time[1]);
+        if(minutes % 5 > 0) {
+            minutes += (minutes % 5 > 2) ? (5 -(minutes % 5)) : -(minutes % 5);
+            time[1] = minutes;
+        }
+
+        let timeString = time[0] + ':' + time[1];
+        return timeString;
     }
 
     setImageUrl = async (url) => {

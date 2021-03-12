@@ -41,12 +41,12 @@ class SearchBar extends Component {
         let venueButtons = VenueTypes.map(type => {
             return (
                 (type === this.state.criteria.type) ?
-                    <div className="w3-round-large w3-cell l1 selected-type-box">
-                      <h3 id={type} className="type-text w3-wide" onClick={this.setType} key={type}>{type}</h3>
+                    <div className="w3-round-large w3-cell l1 selected-type-box" key={type}>
+                      <h3 id={type} className="type-text w3-wide" onClick={this.setType}>{type}</h3>
                     </div>
                 :
-                    <div className="w3-round-large w3-cell l1 type-box">
-                        <h3 id={type} className="type-text w3-wide" onClick={this.setType} key={type}>{type}</h3>
+                    <div className="w3-round-large w3-cell l1 type-box" key={type}>
+                        <h3 id={type} className="type-text w3-wide" onClick={this.setType}>{type}</h3>
                     </div>
             )
         });

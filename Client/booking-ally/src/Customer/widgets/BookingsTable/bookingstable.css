@@ -1,0 +1,118 @@
+@import url("../../../root.css");
+
+.booking-table {
+    height: auto;
+    width: 103%;
+    background-color: var(--magnolia);
+    border-radius: 5px;
+    padding: 30px 10px 10px 10px;
+}
+
+.booking-table-bookings {
+    width: 100%;
+    padding: 0;
+}
+
+.booking-table-column {
+    alignment: center;
+    height: 100%;
+    width:9vw;
+    border-left: 1px solid var(--grey-dark);
+
+}
+
+.booking-table-header {
+    alignment: center;
+    text-align: center;
+    font-weight: bold;
+    height: 45px;
+
+}
+
+.booking-table-header-date {
+    padding-top: 0;
+    margin-top: 0;
+    font-weight: 500;
+    border-bottom: 1px solid var(--grey-dark);
+}
+
+.booking-table-data {
+    padding: 0 0 2px 0;
+    width: 7.5vw;
+}
+
+.booking-table-data-closed {
+    background-image: linear-gradient( to right, rgba(255, 28, 28, 0.5), rgba(255, 28, 28, 0.5)),
+    url("../../../Resources/backgrounds/memphis-mini.png") !important;
+    border-radius: 5px;
+    border: 1px solid #555555;
+}
+
+.booking-table-data-free {
+    padding: 0;
+    background-image: linear-gradient( to right, rgba(1,167,41,0.75), rgba(1,167,41,0.75)),
+    url("../../../Resources/backgrounds/qbkls.png") !important;
+    border-radius: 5px;
+    border: 1px solid green;
+}
+
+.booking-table-data-free:hover{
+    border:1px solid var(--magnolia);
+}
+
+.booking-table-data-booked {
+    background-image: linear-gradient( to right, var(--grey-dark-alpha75), var(--grey-dark-alpha75)),
+    url("../../../Resources/backgrounds/memphis-mini.png") !important;
+    border-radius: 5px;
+    border: 1px solid #555555 ;
+}
+
+.booking-table-time {
+    font-weight: bold;
+    padding: 0 0 0 10px;
+}
+
+.booking-table-time-cell {
+    height: 30px;
+    alignment: center;
+    text-align: center;
+    width: 5vw;
+}
+
+.booking-table-time-cell-header {
+    height: 45px;
+    padding-top: 10px;
+    alignment: center;
+    text-align: center;
+    width: 5vw;
+    border-bottom: 1px solid var(--grey-dark);
+}
+
+.booking-table-empty-data {
+
+}
+
+.booking-table-no-bookings {
+    height: 100%;
+    padding-top: 20%;
+}
+
+.booking-table-odd-cell {
+    background-color: var(--grey-dark-alpha75);
+}
+
+.booking-table-arrow {
+    border-radius: 5px;
+    border: 1px solid var(--grey-dark);
+    width: 50%;
+    height: 40px;
+    margin: 0 5px 0 5px;
+    font-size: 20px;
+    padding: 25% 5px 25% 5px;
+    color: var(--grey-dark);
+}
+
+.booking-table-arrow:hover {
+    background-color: rgba(1,167,41,0.75);
+    color: var(--magnolia);
+}

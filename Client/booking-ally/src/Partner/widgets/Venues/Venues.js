@@ -36,7 +36,7 @@ class Venues extends Component {
                                 </div>
                             </div>
                             <div className="w3-container w3-cell">
-                                <Services venue={venue}/>
+                                <Services venue={venue} options={true}/>
                             </div>
                         </div>
                         :
@@ -76,7 +76,8 @@ class Venues extends Component {
 const mapStateToProps = (state) => {
     return {
         partnerVenues: state.partnerVenues,
-        services: state.services
+        services: state.services,
+        selectedVenue: state.selectedVenue
     }
 }
 

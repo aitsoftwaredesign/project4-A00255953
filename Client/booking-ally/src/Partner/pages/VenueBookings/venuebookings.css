@@ -1,0 +1,10 @@
+@import url("../../../root.css");
+
+.venue-bookings {
+    width: 100%;
+    padding: 0;
+}
+
+.venue-bookings-table {
+    padding: 0;
+}

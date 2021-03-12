@@ -19,6 +19,23 @@ class EditService extends Component {
         });
     }
 
+    onChangeTime = (e) => {
+        e.preventDefault();
+
+        let time = e.target.value.split(':');
+        let minutes = parseInt(time[1]);
+        if(minutes % 5 > 0) {
+            minutes += (minutes % 5 > 2) ? (5 -(minutes % 5)) : -(minutes % 5);
+            time[1] = minutes;
+        }
+
+        let timeString = time[0] + ':' + time[1];
+
+        this.setState({
+            length: timeString
+        });
+    }
+
     editService = async (e) => {
         e.preventDefault();
 
@@ -98,7 +115,7 @@ class EditService extends Component {
                                 type="time"
                                 id="length"
                                 value={this.state.length}
-                                onChange={this.onChange}
+                                onChange={this.onChangeTime}
                             />
                         </div>
                     </div>

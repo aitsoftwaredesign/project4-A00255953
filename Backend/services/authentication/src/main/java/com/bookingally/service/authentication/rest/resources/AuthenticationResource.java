@@ -1,7 +1,5 @@
 package com.bookingally.service.authentication.rest.resources;
 
-import com.bookingally.service.common.util.ImageUploadKeyUtil;
-import com.bookingally.service.common.database.models.Partner;
 import com.bookingally.service.common.pojo.AuthRequest;
 import com.bookingally.service.common.pojo.AuthResponse;
 import com.bookingally.service.common.rest.security.JwtTokenUtil;
@@ -10,7 +8,6 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
