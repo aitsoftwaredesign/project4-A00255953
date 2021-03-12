@@ -36,6 +36,8 @@
 }
 
 .desc {
+    height: 25px;
+    overflow: hidden;
     text-overflow: ellipsis;
 }
 

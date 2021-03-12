@@ -17,7 +17,7 @@ class DeleteVenue extends Component {
             input: e.target.value
         });
 
-        if(e.target.value.toString().trim() === this.props.venue.name.toString().trim()) {
+        if(e.target.value.toString().trim() === this.props.selectedVenue.name.toString().trim()) {
             this.setValid(true);
         } else {
             this.setValid(false);
@@ -43,10 +43,10 @@ class DeleteVenue extends Component {
         e.preventDefault();
         if (this.state.active) {
             let restClient = new RestClient();
-            let response = await restClient.deleteVenue(this.props.venue);
+            let response = await restClient.deleteVenue(this.props.selectedVenue);
             if (response.status === 200) {
                 alert("Venue Deleted");
-                await restClient.deleteImage(this.props.venue.image);
+                await restClient.deleteImage(this.props.selectedVenue.image);
                 this.props.refresh();
                 this.props.cancel();
             } else {
@@ -64,7 +64,7 @@ class DeleteVenue extends Component {
                     </div>
                     <div className="w3-container" id="delete">
                         <div className="w3-container">
-                            <h3 htmlFor="delete" className="delete-header">Are you sure you want to delete {this.props.venue.name}?</h3>
+                            <h3 htmlFor="delete" className="delete-header">Are you sure you want to delete {this.props.selectedVenue.name}?</h3>
                         </div>
                         <div className="w3-container">
                             <label className="delete-label time">Type the name of the venue to confirm: </label>
@@ -96,7 +96,8 @@ class DeleteVenue extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        user: state.user
+        user: state.user,
+        selectedVenue: state.selectedVenue
     }
 }
 

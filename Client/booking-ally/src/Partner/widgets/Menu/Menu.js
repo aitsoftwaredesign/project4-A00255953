@@ -10,15 +10,8 @@ class Menu extends Component {
         if (this.props.user) {
             return this.props.user.username;
         } else {
-            this.setUser().then();
             return "Account";
         }
-    }
-
-    setUser = async () => {
-        let restClient = new RestClient();
-        let response = await restClient.getUser();
-        if(response != null) this.props.setUser(response);
     }
 
     render() {

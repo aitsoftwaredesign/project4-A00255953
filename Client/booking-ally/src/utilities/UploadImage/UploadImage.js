@@ -38,7 +38,7 @@ class Uploadimage extends Component {
     imagePreview = () => {
         return (
             (this.state.image !== "") ?
-                <img src={this.state.image} style={{margin:"10px" , width:"500px", height:"300px"}}/>
+                <img src={this.state.image} alt="Uploaded preview" style={{margin:"10px" , width:"500px", height:"300px"}}/>
             :
                 <div></div>
         )

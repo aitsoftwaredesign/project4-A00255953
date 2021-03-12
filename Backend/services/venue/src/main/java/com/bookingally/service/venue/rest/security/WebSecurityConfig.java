@@ -57,7 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET,"/venue", "/venue/**", "/venue/partner/**", "/service/venue/**",
-                        "/service").permitAll()
+                        "/service", "/booking/venue/**").permitAll()
                 .antMatchers("/api-docs.html", "/swagger-ui/**", "/api-docs/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/venue/find").permitAll()
                 .anyRequest().authenticated().and()

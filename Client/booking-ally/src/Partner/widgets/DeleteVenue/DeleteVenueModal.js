@@ -5,7 +5,7 @@ import DeleteVenue from "./DeleteVenue";
 
 Modal.setAppElement(document.getElementById('root'));
 
-const DeleteVenueModal = ({venue, refresh}) => {
+const DeleteVenueModal = ({refresh}) => {
     const [modalIsOpen,setIsOpen] = React.useState(false);
 
     let customStyles = {
@@ -40,7 +40,7 @@ const DeleteVenueModal = ({venue, refresh}) => {
                 onRequestClose={closeModal}
                 style={customStyles}
                 contentLabel="Delete Venue Form">
-                <DeleteVenue cancel={closeModal} venue={venue} refresh={refresh}/>
+                <DeleteVenue cancel={closeModal} refresh={refresh}/>
             </Modal>
         </div>
     )

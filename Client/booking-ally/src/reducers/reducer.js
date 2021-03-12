@@ -1,44 +1,32 @@
-import RestClient from "../utilities/rest/RestClient";
-
 const initState = {
     venues: [],
-    user: null,
-    accountType: "",
+    user: localStorage.getItem('BAuser') !== null ? JSON.parse(localStorage.getItem('BAuser')) : null,
+    accountType: localStorage.getItem('BAaccountType') !== null ? localStorage.getItem('BAaccountType') : '',
     token: localStorage.getItem('BAtoken') !== null ? localStorage.getItem('BAtoken') : ''
 }
 
-const getServices = async (id) => {
-    let restClient = new RestClient();
-    let services = await restClient.getServicesByVenueId(id);
-    return services;
-}
-
 const reducer = (state = initState, action) => {
-    switch(action.type) {
+    switch (action.type) {
         case 'SET_VENUES':
             return {
                 ...state,
                 venues: action.venues
             }
-            break;
         case 'SET_TOKEN':
             return {
                 ...state,
                 token: action.token
             }
-            break;
         case 'SET_USER':
             return {
                 ...state,
                 user: action.user
             }
-            break;
         case 'SET_TYPE':
             return {
                 ...state,
                 accountType: action.account
             }
-            break;
         case 'LOGOUT':
             localStorage.removeItem('BAtoken');
             return {
@@ -47,7 +35,6 @@ const reducer = (state = initState, action) => {
                 token: '',
                 accountType: ''
             }
-            break;
         case 'SET_PARTNER_VENUES':
             return {
                 ...state,
@@ -63,13 +50,30 @@ const reducer = (state = initState, action) => {
                 ...state,
                 selectedService: action.service
             }
-        case 'GET_SERVICES':
-            let services = getServices(action.id);
+        case 'SELECT_VENUE':
             return {
                 ...state,
-                services: services
+                selectedVenue: action.venue
+            }
+        case 'SET_VENUE_BOOKINGS':
+            return {
+                ...state,
+                venueBookings: action.bookings
+            }
+        case 'SET_OPEN_LOGIN':
+            return {
+                ...state,
+                login: action.login
+            }
+        case 'SET_CUSTOMER_BOOKINGS':
+            return {
+                ...state,
+                customerBookings: action.bookings
+            }
+        default:
+            return {
+                ...state
             }
     }
-    return state
 }
 export default reducer;

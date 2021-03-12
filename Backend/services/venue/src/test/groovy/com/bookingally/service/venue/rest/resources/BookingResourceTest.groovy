@@ -53,14 +53,18 @@ class BookingResourceTest extends Specification {
         given:"A mock booking repository that will return the booking"
             bookingRepository.findById("1") >> new Optional<Booking>(booking)
             bookingRepository.findById("2") >> new Optional<>()
+            userDetailsService.loadUserById("1") >> new User(customer.getUsername(), customer.getPassword(), new ArrayList<>())
+            userDetailsService.loadUserAccount(customer.getUsername()) >> ["Customer", customer]
         when: "get booking is called"
-            def response = bookingResource.getBooking(id)
+            def response = bookingResource.getBooking(id, returnAccount)
         then: "the correct response should be given for a valid or invalid id"
             response.statusCodeValue == statusCode
         where:
-            id | statusCode
-            "1"| 200
-            "2"| 404
+            id | statusCode | returnAccount
+            "1"| 200        | false
+            "1"| 200        | true
+            "2"| 404        | false
+            "2"| 404        | true
     }
 
     def "When get venue bookings is called with a valid and invalid venue id the correct response is received"() {

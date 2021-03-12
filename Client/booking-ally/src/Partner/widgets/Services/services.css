@@ -25,3 +25,7 @@
     white-space: nowrap;
     color: var(--grey-dark);
 }
+
+.service-options-calendar {
+    color:  #0e770e;
+}

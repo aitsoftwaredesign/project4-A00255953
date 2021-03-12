@@ -69,7 +69,9 @@ class CustomerLogin extends Component {
 
             //Store the user
             this.props.setUser(response.account);
-            this.props.setType(AccountTypes.Customer);
+            localStorage.setItem('BAuser', JSON.stringify(response.account));
+            this.props.setType(response.accountType);
+            localStorage.setItem('BAaccountType', response.accountType);
 
             this.props.cancel();
         } else {

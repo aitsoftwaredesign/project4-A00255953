@@ -1,0 +1,42 @@
+@import url('../../../root.css');
+
+.customer-booking {
+    background-color: var(--magnolia);
+    width:40%;
+    height: 45%;
+    margin: 1% 2% 1% 2%;
+    padding: 0;
+    border-radius: 5px;
+    border: 1px solid var(--grey-dark);
+    box-shadow: 2px 2px 10px;
+}
+
+.customer-booking-bookings-bar {
+    background-color: var(--magnolia);
+    border-radius: 5px;
+    padding: 20px;
+    margin: 5%;
+    box-shadow: 2px 2px 10px;
+}
+
+.customer-booking-bar-title {
+    border-bottom: 1px solid var(--grey-dark);
+}
+
+.customer-booking-loading {
+    background-color: var(--magnolia);
+    border-radius: 5px;
+    width: 30%;
+    height: 30%;
+}
+
+.customer-booking-button-delete {
+    background-color: var(--delete-red-alpha75);
+    border-radius: 5px;
+    border: 1px solid var(--grey-dark);
+    margin: 10px 30% 10px 30%;
+}
+
+.customer-booking-button-delete:hover {
+    background-color: var(--delete-red);
+}

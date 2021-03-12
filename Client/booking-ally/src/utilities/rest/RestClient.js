@@ -122,7 +122,7 @@ class RestClient {
      * @returns {Promise<User>}
      */
     async registerUser(user, partner = false) {
-        const url = Routes.getAddress() + Routes.register + (!partner) ? "/customer" : "/partner";
+        const url = Routes.getAddress() + Routes.register + ((!partner) ? "/customer" : "/partner");
         const response = await fetch(url, {
             method: 'POST',
             headers: {
@@ -239,7 +239,116 @@ class RestClient {
         return await response.json();
     }
 
+    /**
+     * Get the service for the given service Id
+     * @param serviceId - the venue id of the services to find
+     * @returns {Promise<any>}
+     */
+    async getServiceById(serviceId) {
+        const url = Routes.getAddress() + Routes.serviceExt + "/" + serviceId;
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                Authorization: 'Bearer ' + this.getToken()
+            }
+        });
 
+        return await response.json();
+    }
+
+    /**
+     * Get the bookings for the given venue by the given venue Id
+     * @param venueId - the venue id of the bookings to find
+     * @returns {Promise<any>}
+     */
+    async getBookingsByVenueId(venueId) {
+        const url = Routes.getAddress() + Routes.bookingExt + "/venue/" + venueId;
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                Authorization: 'Bearer ' + this.getToken()
+            }
+        });
+
+        return await response.json();
+    }
+
+    /**
+     * Get the bookings for the given booking Id
+     * @param bookingId - the id of the booking to find
+     * @param returnUser - set as true to return the customer name
+     * @returns {Promise<any>}
+     */
+    async getBookingsById(bookingId, returnUser = false) {
+        const url = Routes.getAddress() + Routes.bookingExt + "/" + bookingId + '?returnUser=' + returnUser;
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                Authorization: 'Bearer ' + this.getToken()
+            }
+        });
+
+        return await response.json();
+    }
+
+    /**
+     * Get the bookings for the given customer booking Id
+     * @param customerId - the id of the customers bookings to find
+     * @returns {Promise<any>}
+     */
+    async getCustomerBookings(customerId) {
+        const url = Routes.getAddress() + Routes.bookingExt + "/user/" + customerId;
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                Authorization: 'Bearer ' + this.getToken()
+            }
+        });
+
+        return await response.json();
+    }
+
+    /**
+     * Persists the given booking in the database for an existing venue.
+     * @param booking
+     * @returns {Promise<any>}
+     */
+    async createBooking(booking) {
+        const url = Routes.getAddress() + Routes.bookingExt;
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+                Authorization: 'Bearer ' + this.getToken()
+            },
+            body: JSON.stringify(booking)
+        });
+        return response.json();
+    }
+
+    /**
+     * Delete the given booking from the database.
+     * @param booking
+     * @returns {Promise<Response>}
+     */
+    async deleteBooking(booking) {
+        const url = Routes.getAddress() + Routes.bookingExt;
+        const response = await fetch(url, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: '*/*',
+                Authorization: 'Bearer ' + this.getToken()
+            },
+            body: JSON.stringify(booking)
+        });
+        return response;
+    }
 
 }
 

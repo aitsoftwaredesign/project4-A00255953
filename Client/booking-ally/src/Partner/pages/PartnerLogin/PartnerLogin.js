@@ -110,9 +110,9 @@ class PartnerLogin extends Component {
 
             //Store the user
             this.props.setUser(response.account);
+            localStorage.setItem('BAuser', JSON.stringify(response.account));
             this.props.setType(response.accountType);
-
-            window.location.reload();
+            localStorage.setItem('BAaccountType', response.accountType);
         }
     }
 

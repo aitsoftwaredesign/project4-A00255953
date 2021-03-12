@@ -1,0 +1,47 @@
+@import url("../../../root.css");
+
+.venue-menu {
+    padding: 0;
+}
+
+.venue-menu-image {
+    width: 32vw;
+    height: 18vw;
+    margin-left: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px 2px rgba(57, 57, 57, 0.5);
+}
+
+.venue-menu-description {
+    padding-left: 15px;
+}
+
+.venue-menu-text {
+    background-color: var(--magnolia);
+    border-radius: 5px;
+    margin: 0 10px 10px 40px;
+    height: 18vw;
+}
+
+.venue-menu-services {
+    height: 40vh;
+    padding: 20px;
+    margin: 20px 10px 10px 10px;
+    overflow: auto;
+    background-color: var(--magnolia);
+    border-radius: 5px;
+}
+
+.venue-menu-table {
+    margin-top: 10px;
+    height: 40vh;
+}
+
+.vl {
+    margin-top: 4vh;
+    padding: 0 1px 0 1px;
+    width: 1px;
+    height: 40vh;
+    background-color: lightgray;
+}
+

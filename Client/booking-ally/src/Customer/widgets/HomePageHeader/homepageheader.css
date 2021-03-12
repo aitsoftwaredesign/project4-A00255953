@@ -1,0 +1,39 @@
+@import url("../../../root.css");
+
+.nav{
+    background-color: var(--grey-dark);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    height: 550px;
+    transition: background-image 2s, height 1s;
+    padding-bottom: 4%;
+    box-shadow: 0 0 10px;
+}
+
+.header {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.title {
+    margin-left: 5%;
+    font-size: 50px;
+    color: white;
+}
+
+.sticky {
+    position: sticky;
+}
+
+.text {
+    font-size :5vw;
+    text-shadow :2px 2px 5px #555;
+    text-overflow: ellipsis;
+    text-wrap: none;
+    white-space: nowrap;
+}
+
+.home-page-header-login{
+    background-color: white;
+    color: var(--magnolia) !important;
+}

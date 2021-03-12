@@ -5,7 +5,7 @@ import "./editvenuemodal.css";
 
 Modal.setAppElement(document.getElementById('root'));
 
-const EditVenueModal = ({venue,refresh}) => {
+const EditVenueModal = ({refresh}) => {
     const [modalIsOpen,setIsOpen] = React.useState(false);
 
     let customStyles = {
@@ -42,7 +42,7 @@ const EditVenueModal = ({venue,refresh}) => {
                     onRequestClose={closeModal}
                     style={customStyles}
                     contentLabel="Create Venue Form">
-                    <EditVenue cancel={closeModal} venue={venue} refresh={refresh}/>
+                    <EditVenue cancel={closeModal} refresh={refresh}/>
                 </Modal>
             </div>
     )

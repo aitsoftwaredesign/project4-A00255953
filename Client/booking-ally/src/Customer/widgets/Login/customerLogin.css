@@ -1,7 +1,13 @@
+@import "../../../root.css";
+
 .output {
     font-size: 25px;
-    color: white;
-    padding: 40px;
+    padding: 20px;
+    margin: 15px 10px 15px 0;
+}
+
+.output:hover {
+    color: deepskyblue;
 }
 
 button {

@@ -1,0 +1,20 @@
+@import "../../../root.css";
+
+.create-booking{
+    font-size: 20px;
+    text-align: center;
+    width: 100%;
+    color: var(--magnolia)
+}
+
+.create-booking-icon{
+    color: var(--magnolia)
+}
+
+.create-booking-buttons{
+}
+
+.create-booking-section {
+    background-color: var(--grey-dark-alpha75);
+    border-radius: 5px;
+}
