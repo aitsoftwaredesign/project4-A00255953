@@ -8,8 +8,8 @@ import AccountTypes from "../../../Resources/AccountTypes";
 class NavBar extends Component {
 
     componentDidMount() {
-        if(localStorage.getItem('BAToken') !== null ){
-
+        if(localStorage.getItem('BAtoken') !== null ){
+            this.props.setToken(localStorage.getItem('BAtoken'));
         }
     }
 
@@ -42,4 +42,10 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(NavBar);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setToken: (token) => { dispatch({ type:'SET_TOKEN', token:token })}
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

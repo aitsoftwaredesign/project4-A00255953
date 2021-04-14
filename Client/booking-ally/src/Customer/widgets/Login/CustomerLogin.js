@@ -108,6 +108,8 @@ class CustomerLogin extends Component {
                 //Store the user
                 this.props.setUser(response);
                 this.props.setType(AccountTypes.Customer);
+                localStorage.setItem('BAuser', JSON.stringify(response));
+                localStorage.setItem('BAaccountType', AccountTypes.Customer);
 
                 //Store the token
                 let token = await this.restClient.authenticate(user, false);

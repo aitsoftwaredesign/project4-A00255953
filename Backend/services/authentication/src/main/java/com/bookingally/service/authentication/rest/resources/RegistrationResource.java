@@ -25,7 +25,7 @@ public class RegistrationResource {
      * Persists a given {@link Partner} in the database, then returns the persisted object.
      * To create a new partner the id value of partner must be null.
      * @param partner the new {@link Partner} to be persisted in the database
-     * @return {@link ResponseEntity <   Partner   >} a response entity containing the saved persistence entity in its response body
+     * @return {@link ResponseEntity<Partner>} a response entity containing the saved persistence entity in its response body
      */
     @PostMapping("/partner")
     public ResponseEntity<?> savePartner(@RequestBody Partner partner) {
@@ -43,7 +43,7 @@ public class RegistrationResource {
      * Persists a given {@link Customer} in the database, then returns the persisted object.
      * To create a new partner the id value of partner must be null.
      * @param customer the new {@link Customer} to be persisted in the database
-     * @return {@link ResponseEntity<   Customer   >} a response entity containing the saved persistence entity in its response body
+     * @return {@link ResponseEntity<Customer>} a response entity containing the saved persistence entity in its response body
      */
     @PostMapping("/customer")
     public ResponseEntity<?> saveUser(@RequestBody Customer customer) {

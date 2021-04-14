@@ -64,7 +64,7 @@ class Services extends Component {
                     {options}
                 </div>
                 <div className="service-edit-create w3-sans-serif w3-container w3-cell w3-hover-blue w3-round">
-                    <Link to={"/partner/" + this.props.selectedVenue.id} style={{ textDecoration: 'none' }}>
+                    <Link to={"/partner/bookings/" + this.props.selectedVenue.id} style={{ textDecoration: 'none' }}>
                         View Bookings  <i className="fas fa-calendar-week service-options-calendar"/>
                     </Link>
                 </div>
