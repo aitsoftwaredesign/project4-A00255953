@@ -40,7 +40,7 @@ class App extends Component {
                   <Route exact path="/partner">
                       {this.partnerLoggedIn() ? <PartnerHome/> : <Redirect to="/partner/login"/>}
                   </Route>
-                  <Route exact path="/partner/:venue_id">
+                  <Route exact path="/partner/bookings/:venue_id">
                       {this.partnerLoggedIn() ? <VenueBookings/> : <Redirect to="/partner/login"/>}
                   </Route>
               </div>

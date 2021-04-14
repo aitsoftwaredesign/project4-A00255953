@@ -45,8 +45,8 @@ public class AuthenticationResource {
      * @return {@link AuthResponse} a response entity that contains the jwt
      */
     @PostMapping("/authenticate")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthRequest authRequest, @RequestParam(defaultValue = "false")  boolean returnAccount)
-            throws Exception {
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthRequest authRequest,
+           @RequestParam(defaultValue = "false")  boolean returnAccount) throws Exception {
 
         authenticate(authRequest.getUsername(), authRequest.getPassword());
 
